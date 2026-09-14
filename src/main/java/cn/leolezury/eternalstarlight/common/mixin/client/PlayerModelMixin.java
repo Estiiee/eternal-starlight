@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Mixin(PlayerModel.class)
+@Mixin(value = PlayerModel.class, priority = 9999)
 public abstract class PlayerModelMixin<T extends LivingEntity> implements AnimatedModel {
 	@Unique
 	private static List<PlayerAnimator.AnimationTransformer> transformers = new ArrayList<>();

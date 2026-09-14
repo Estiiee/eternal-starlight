@@ -1,4 +1,4 @@
-// 1.20.1	2026-06-02T18:51:48.3492608	Tags for minecraft:item mod id eternal_starlight
+// 1.20.1	2026-09-14T12:53:43.8799448	Tags for minecraft:item mod id eternal_starlight
 49d6be28d9b8da6ebe3d7246980fb4a6109f43df data/c/tags/items/campfires.json
 e4fdfbaf8d9054e500c7eec455bfa598ca079aaa data/c/tags/items/crops/crinoa.json
 0f45e4de3f46badd50b06221cecbacd1794901a9 data/c/tags/items/crops/nocturnal_millet.json
@@ -56,6 +56,7 @@ ba9125aa546790a0582445879c658b228dbb763c data/eternal_starlight/tags/items/acces
 caa885e89e3dc28bc90ef4a54ca6e6e730ac2902 data/eternal_starlight/tags/items/accessory_applicable/chest_armor.json
 e18f783b117a7e13e931b76dc1175b8cbca5eddb data/eternal_starlight/tags/items/accessory_applicable/hammer.json
 2c459201be6438a80825cfcb1ebe63fb3bd2c95c data/eternal_starlight/tags/items/affects_progression.json
+094c4fbf119c5e4e24a80e22eb90ce0466f199b3 data/eternal_starlight/tags/items/algaleaves.json
 927eea18d2e0cad6041456fa64447d58487d01e8 data/eternal_starlight/tags/items/alloy_furnaces.json
 69165642c5517f262b2c875ba315ce65ffaf1430 data/eternal_starlight/tags/items/animal_foods.json
 39cb07b4aa95e9ec61973996f0cfeb322b669961 data/eternal_starlight/tags/items/arrow_feathers.json
@@ -108,7 +109,7 @@ b3cddbfdf578fe8cacdc142e853b2c4445171ec3 data/eternal_starlight/tags/items/encha
 d7c1782e5de8f70d6255d6f078aa74749d709569 data/eternal_starlight/tags/items/ent_fertilizers.json
 8296f8ceeab7662e69799ab272a14ec3b9dc60a0 data/eternal_starlight/tags/items/ent_food.json
 306a101c92d99ae7220cccb0090d43ea44110cd2 data/eternal_starlight/tags/items/flowglaze_weapons.json
-e18fa3346e2c22c5ebc6cd13d000c1b2720b3276 data/eternal_starlight/tags/items/foods.json
+048d04fec6d1c8470cd876a58afb13aa638a1e68 data/eternal_starlight/tags/items/foods.json
 f68b1445e8e902a4ca456603a16efc4c38729102 data/eternal_starlight/tags/items/foods/berry.json
 116ffed57cee4ddc2c46b14178918e2809039cbe data/eternal_starlight/tags/items/foods/cooked_fish.json
 3a4b43c6ea5f9487579cdc5d513d8299ae4524b3 data/eternal_starlight/tags/items/foods/cooked_meat.json

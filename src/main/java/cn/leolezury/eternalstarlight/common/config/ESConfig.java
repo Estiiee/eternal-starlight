@@ -12,13 +12,16 @@ public class ESConfig {
 	public static ForgeConfigSpec.BooleanValue enableScreenShake;
 	public static ForgeConfigSpec.BooleanValue enableLootChest;
 	public static ForgeConfigSpec.BooleanValue enableBossRespawn;
-	public static ForgeConfigSpec.IntValue bossRespawnCooldown;
 	public static ForgeConfigSpec.BooleanValue spawnInEternalStarlight;
 	public static ForgeConfigSpec.BooleanValue respawnInEternalStarlight;
 	public static ForgeConfigSpec.BooleanValue startWithGuidebook;
-	public static ForgeConfigSpec.DoubleValue aethersentMeteorDropRate;
 	public static ForgeConfigSpec.BooleanValue aethersentMeteorReplaceBlocks;
+	public static ForgeConfigSpec.BooleanValue blockUnknownAttachmentWarning;
+
+	public static ForgeConfigSpec.DoubleValue aethersentMeteorDropRate;
+
 	public static ForgeConfigSpec.IntValue mobMaxTearyTicks;
+	public static ForgeConfigSpec.IntValue bossRespawnCooldown;
 
 	// ===== ITEMS =====
 	public static ForgeConfigSpec.DoubleValue playerAethersentMeteorDamageScale;
@@ -225,6 +228,7 @@ public class ESConfig {
 		aethersentMeteorDropRate = BUILDER.defineInRange("aethersentMeteorDropRate", 0.0005, 0.0, 1.0);
 		aethersentMeteorReplaceBlocks = BUILDER.define("aethersentMeteorReplaceBlocks", false);
 		mobMaxTearyTicks = BUILDER.defineInRange("mobMaxTearyTicks", 200, 0, 100000);
+		blockUnknownAttachmentWarning = BUILDER.define("blockUnknownAttachmentWarning", true);
 		BUILDER.pop();
 
 		// ===== ITEMS =====

@@ -356,6 +356,8 @@ public class ESAdvancementGenerator implements AdvancementSubProvider {
 
 		Advancement dustedShard = addItemObtain(consumer, enterDim, "obtain_dusted_shard", ESItems.DUSTED_SHARD.get());
 
+		Advancement jinglestemSandwich = addItemObtain(consumer, enterDim, "obtain_jinglestem_sandwich", ESItems.JINGLESTEM_SANDWICH.get());
+
 		Advancement.Builder allStarlightBiomesBuilder = Advancement.Builder.advancement().parent(enterDim).display(
 				ESBlocks.NIGHTFALL_GRASS_BLOCK.get(),
 				Component.translatable("advancements." + EternalStarlight.ID + ".all_starlight_biomes.title"),

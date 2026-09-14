@@ -392,6 +392,7 @@ public class ESBlocks {
 
 	// eternal ice
 	public static final RegistryObject<Block, Block> ETERNAL_ICE = BLOCKS.register("eternal_ice", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.GLASS).mapColor(MapColor.ICE)));
+	public static final RegistryObject<Block, HalfTransparentBlock> THIN_ETERNAL_ICE = BLOCKS.register("thin_eternal_ice", () -> new HalfTransparentBlock(BlockBehaviour.Properties.copy(Blocks.PACKED_ICE).noOcclusion()));
 	public static final RegistryObject<Block, Block> ETERNAL_ICE_BRICKS = BLOCKS.register("eternal_ice_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE_BRICKS).sound(SoundType.GLASS).mapColor(MapColor.ICE)));
 	public static final RegistryObject<Block, SlabBlock> ETERNAL_ICE_BRICK_SLAB = BLOCKS.register("eternal_ice_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.STONE_BRICK_SLAB).sound(SoundType.GLASS).mapColor(MapColor.ICE)));
 	public static final RegistryObject<Block, StairBlock> ETERNAL_ICE_BRICK_STAIRS = BLOCKS.register("eternal_ice_brick_stairs", () -> new StairBlock(ETERNAL_ICE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.STONE_BRICK_STAIRS).sound(SoundType.GLASS).mapColor(MapColor.ICE)));

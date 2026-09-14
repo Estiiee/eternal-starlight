@@ -8,6 +8,8 @@ import net.minecraft.world.food.FoodProperties;
 import java.util.function.Supplier;
 
 public class ESFoods {
+	public static final Supplier<FoodProperties> JINGLESTEM_CRISP = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(4).saturationMod(0.8F).build());
+	public static final Supplier<FoodProperties> JINGLESTEM_SANDWICH = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(6).saturationMod(0.8F).build());
 	public static final Supplier<FoodProperties> LUNAR_BERRIES = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(3).saturationMod(0.8F).build());
 	public static final Supplier<FoodProperties> BOULDERSHROOM_STEW = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).effect(new MobEffectInstance(ESMobEffects.STICKY.get(), 2400, 0), 0.8f).build());
 	public static final Supplier<FoodProperties> LUNARIS_CACTUS_FRUIT = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(4).saturationMod(0.1f).effect(new MobEffectInstance(MobEffects.GLOWING, 600, 0), 0.8F).effect(new MobEffectInstance(MobEffects.POISON, 200, 0), 0.8F).build());
@@ -37,6 +39,6 @@ public class ESFoods {
 	public static final Supplier<FoodProperties> SHADOW_ESCARGOT = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(9).saturationMod(0.8F).build());
 	public static final Supplier<FoodProperties> SEEKER_TENTACLE = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(4).saturationMod(0.1F).fast().build());
 	public static final Supplier<FoodProperties> FUNGUS = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(6).saturationMod(1.2F).build());
-	public static final Supplier<FoodProperties> DOOMEDEN_CARRION = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(4).saturationMod(0.1f).effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.8F).build());
-	public static final Supplier<FoodProperties> ROTTEN_HAM = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(8).saturationMod(0.8f).effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.3F).build());
+	public static final Supplier<FoodProperties> DOOMEDEN_CARRION = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(4).saturationMod(0.1F).effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.8F).build());
+	public static final Supplier<FoodProperties> ROTTEN_HAM = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(8).saturationMod(0.8F).effect(new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.3F).build());
 }

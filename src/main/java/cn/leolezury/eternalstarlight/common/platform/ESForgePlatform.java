@@ -174,7 +174,6 @@ public class ESForgePlatform implements ESPlatform {
 		}
 
 		public void bind(Supplier<IForgeRegistry<T>> reg) {
-			System.out.println("WEEE binding supplier: " + reg);
 			this.registrySupplier = reg;
 		}
 

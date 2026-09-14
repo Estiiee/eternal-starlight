@@ -55,7 +55,7 @@ import java.util.Optional;
 import java.util.function.*;
 
 public interface ESPlatform {
-	ESPlatform INSTANCE = new  ESForgePlatform(); //loom architectury remnant
+	ESPlatform INSTANCE = new ESForgePlatform(); //loom architectury remnant
 
 	enum Loader {
 		NEOFORGE,

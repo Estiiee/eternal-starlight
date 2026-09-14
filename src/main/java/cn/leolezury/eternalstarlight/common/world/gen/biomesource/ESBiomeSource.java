@@ -14,6 +14,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Climate;
+import net.minecraftforge.fml.ModList;
+import net.werdei.biome_replacer.replacer.VanillaReplacer;
 
 import java.util.List;
 import java.util.Optional;
@@ -239,7 +241,10 @@ public class ESBiomeSource extends BiomeSource {
 
 	@Override
 	public Holder<Biome> getNoiseBiome(int x, int y, int z, Climate.Sampler sampler) {
-		return getBiomeData(x << 2, y << 2, z << 2, sampler).value().biome();
+		Holder<Biome> biome = getBiomeData(x << 2, y << 2, z << 2, sampler).value().biome();
+		return ModList.get().isLoaded("biome_replacer")
+			? VanillaReplacer.replaceIfNeeded(biome, "eternal_starlight:starlight")
+			: biome;
 	}
 
 	public record RiverEntry(

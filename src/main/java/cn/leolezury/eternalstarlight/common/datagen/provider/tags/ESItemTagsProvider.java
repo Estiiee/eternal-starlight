@@ -62,6 +62,8 @@ public class ESItemTagsProvider extends ItemTagsProvider {
 		copy(ESTags.Blocks.STRIPPED_WOODS, ESTags.Items.STRIPPED_WOODS);
 		tag(ESTags.Items.FOODS)
 			.add(
+				ESItems.JINGLESTEM_CRISP.get(),
+				ESItems.JINGLESTEM_SANDWICH.get(),
 				ESItems.CRINOA_BALL.get(),
 				ESItems.SHADOW_ESCARGOT.get(),
 				ESItems.DOOMEDEN_CARRION.get(),
@@ -667,6 +669,11 @@ public class ESItemTagsProvider extends ItemTagsProvider {
 				ESItems.UNREALIUM_CHESTPLATE.get(),
 				ESItems.UNREALIUM_LEGGINGS.get(),
 				ESItems.UNREALIUM_BOOTS.get()
+			);
+		tag(ESTags.Items.ALGALEAVES)
+			.add(
+				ESItems.HANGING_ALGALEAVES.get(),
+				ESItems.ALGALEAVES.get()
 			);
 		tag(ESTags.Items.CRYSTALBORN_CATALYST_FUELS)
 			.add(

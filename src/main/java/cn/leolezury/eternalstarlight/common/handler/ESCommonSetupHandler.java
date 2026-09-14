@@ -550,11 +550,11 @@ public class ESCommonSetupHandler {
 	}
 
 	public static void registerChunkGenerator() {
-		Registry.register(BuiltInRegistries.CHUNK_GENERATOR, EternalStarlight.ID + ":es_gen", ESChunkGenerator.CODEC_INSTANCE);
+		Registry.register(BuiltInRegistries.CHUNK_GENERATOR, EternalStarlight.ID + ":biome_based", ESChunkGenerator.CODEC_INSTANCE);
 	}
 
 	public static void registerBiomeSource() {
-		Registry.register(BuiltInRegistries.BIOME_SOURCE, EternalStarlight.ID + ":es_biomes", ESBiomeSource.CODEC_INSTANCE);
+		Registry.register(BuiltInRegistries.BIOME_SOURCE, EternalStarlight.ID + ":multi_noise", ESBiomeSource.CODEC_INSTANCE);
 	}
 
 	public static void addReloadListeners(Consumer<PreparableReloadListener> strategy) {
