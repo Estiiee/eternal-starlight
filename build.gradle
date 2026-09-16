@@ -67,6 +67,8 @@ dependencies {
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.4")) {
         jarJar.ranged(it, "[0.5.4,)")
     }
+
+    compileOnly fg.deobf("curse.maven:biome-replacer-910274:7200634")
 }
 
 mixin {

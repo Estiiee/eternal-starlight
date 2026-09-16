@@ -288,7 +288,7 @@ public class ESBiomes {
 		BiomeGenerationSettings.Builder builder = baseLandGenSettings(featureGetter, carverGetter);
 
 		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.SPARSE_FOREST);
-		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.FOREST_VEGETATION);
+		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.PLAINS_VEGETATION);
 		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.CAVE_VINE);
 		builder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ESPlacedFeatures.LUSH_MONOLITH);
 
@@ -299,7 +299,7 @@ public class ESBiomes {
 		BiomeGenerationSettings.Builder builder = baseLandGenSettings(featureGetter, carverGetter);
 
 		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.SCRUBLAND_FOREST);
-		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.FOREST_VEGETATION);
+		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.PLAINS_VEGETATION);
 		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.CAVE_VINE);
 		builder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ESPlacedFeatures.LUSH_MONOLITH);
 

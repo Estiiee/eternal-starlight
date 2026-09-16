@@ -8,14 +8,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ESShortBushBlock extends BushBlock {
+public class ShortBushBlock extends BushBlock {
 	private final int height;
 
-	public ESShortBushBlock(Properties properties) {
+	public ShortBushBlock(Properties properties) {
 		this(3, properties);
 	}
 
-	public ESShortBushBlock(int height, Properties properties) {
+	public ShortBushBlock(int height, Properties properties) {
 		super(properties);
 		this.height = height;
 	}
