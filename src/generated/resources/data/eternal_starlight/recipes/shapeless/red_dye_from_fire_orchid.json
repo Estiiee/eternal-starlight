@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "eternal_starlight:fire_orchid"
+    }
+  ],
+  "result": {
+    "item": "minecraft:red_dye"
+  }
+}

@@ -488,6 +488,8 @@ public class ESItemModelProvider extends ItemModelProvider {
 		flatBlockTexture(ESItems.AMARAMBER_GRASS.get());
 		flatBlockTexture(ESItems.AMARAMBER_GRASS_BUSH.get());
 
+		flatBlockTexture(ESItems.GLOOMCANDLE_ROOT.get());
+
 		block(ESItems.RED_STARLIGHT_CRYSTAL_BLOCK.get());
 		block(ESItems.BLUE_STARLIGHT_CRYSTAL_BLOCK.get());
 		flatBlockTexture(ESItems.RED_STARLIGHT_CRYSTAL_CLUSTER.get());
@@ -517,6 +519,9 @@ public class ESItemModelProvider extends ItemModelProvider {
 		block(ESItems.BLUE_CRYSTAL_MOSS_BLOCK.get());
 		block(ESItems.RED_CRYSTAL_MOSS_CARPET.get());
 		block(ESItems.BLUE_CRYSTAL_MOSS_CARPET.get());
+
+		flatBlockTexture(ESItems.FIRE_ORCHID.get());
+		flatBlockTexture(ESItems.BLAZEBANK_GRASS.get());
 
 		flatBlockTexture(ESItems.MOONLIGHT_LILY_PAD.get());
 		flatBlockTexture(ESItems.STARLIT_LILY_PAD.get());

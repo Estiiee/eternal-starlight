@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-16T12:07:58.3635351	Tags for minecraft:block mod id eternal_starlight
+// 1.20.1	2026-09-16T13:52:17.0149519	Tags for minecraft:block mod id eternal_starlight
 20b3c5a5a15f1b69f68a44a095d38d3bd7b56119 data/c/tags/blocks/ores/deepsilver.json
 be1aa8761efdc0ca07210e3ac53bd0678186bc43 data/c/tags/blocks/ores/malarite.json
 4ae824bf159c2223e29a2d0f70fd8e836d42f4df data/c/tags/blocks/ores/saltpeter.json
@@ -39,6 +39,7 @@ f2d1fdc1f3d6da57f00e708893a3bde6703c4d8f data/eternal_starlight/tags/blocks/buds
 88b3182cadaa96603c8f6b8f329b7b47e694c9c0 data/eternal_starlight/tags/blocks/coral_blocks.json
 7fce1a137247b8258907de27d1fe5b35a15d9986 data/eternal_starlight/tags/blocks/coral_plants.json
 4082a6bd3632e5f26c0837eca5f6dd3d8064b02d data/eternal_starlight/tags/blocks/cradlewood_logs.json
+ea470401f3db28009d4d7ae00bffbc98dc60336d data/eternal_starlight/tags/blocks/crystalborn_catalyst_moss_replaceables.json
 cb28339548a9f5c43f81c4715df14c62d24020ad data/eternal_starlight/tags/blocks/crystalborn_catalyst_preferences.json
 b7fbd8540cede7030defd14229ac4081c906c8be data/eternal_starlight/tags/blocks/crystalborn_catalyst_replaceables.json
 9a0423debca153a44e91f13b9468d52d86adfdf3 data/eternal_starlight/tags/blocks/doomeden_keyhole_destroyables.json
@@ -130,7 +131,7 @@ d0ad7cbe8e4b2e08fea83cf0f9b09343be8ff883 data/minecraft/tags/blocks/portals.json
 ebcc4ae4c545daab4f4774ee9051934a544712d3 data/minecraft/tags/blocks/sand.json
 a43c478f699776ae4fbe23b7f8ec7314a53a2e13 data/minecraft/tags/blocks/saplings.json
 7fcacbdd69c3e4e3cb32dc893b3d1cd0b6bc310a data/minecraft/tags/blocks/slabs.json
-57605e77cfec0104f3aae0446e189c5607887f45 data/minecraft/tags/blocks/small_flowers.json
+395bc043681ec5dded6c2ed7c2cfbd7638fd6949 data/minecraft/tags/blocks/small_flowers.json
 ebcc4ae4c545daab4f4774ee9051934a544712d3 data/minecraft/tags/blocks/smelts_to_glass.json
 d03aaf70ee0baabd79fa57697c4908da48b7bd16 data/minecraft/tags/blocks/snow_layer_cannot_survive_on.json
 1c0c879505957dea201eac55d82aa48e54ee193a data/minecraft/tags/blocks/stairs.json

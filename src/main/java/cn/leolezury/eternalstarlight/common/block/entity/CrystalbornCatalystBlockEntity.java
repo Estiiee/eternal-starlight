@@ -247,8 +247,7 @@ public class CrystalbornCatalystBlockEntity extends BaseContainerBlockEntity {
 				LootParams.Builder builder = new LootParams.Builder(level).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(targetPos)).withParameter(LootContextParams.TOOL, Items.DIAMOND_PICKAXE.getDefaultInstance()).withOptionalParameter(LootContextParams.BLOCK_ENTITY, targetState.hasBlockEntity() ? level.getBlockEntity(targetPos) : null);
 				List<ItemStack> drops = targetState.getDrops(builder);
 				if (level.destroyBlock(targetPos, false)) {
-					level.setBlockAndUpdate(targetPos, (targetState.is(BlockTags.DIRT) || targetState.is(Blocks.MOSS_BLOCK)) ? ESBlocks.RED_CRYSTAL_MOSS_BLOCK.get().defaultBlockState() : ESBlocks.CRYSTALLIZED_SAND.get().defaultBlockState());
-					drops.forEach(dropsConsumer);
+					level.setBlockAndUpdate(targetPos, targetState.is(ESTags.Blocks.CRYSTALBORN_CATALYST_MOSS_REPLACEABLES) ? ESBlocks.RED_CRYSTAL_MOSS_BLOCK.get().defaultBlockState() : ESBlocks.CRYSTALLIZED_SAND.get().defaultBlockState());					drops.forEach(dropsConsumer);
 					pos = targetPos;
 					energyLeft -= 1;
 					List<Direction> preferredDirs = new ArrayList<>(Arrays.stream(Direction.values()).toList());
