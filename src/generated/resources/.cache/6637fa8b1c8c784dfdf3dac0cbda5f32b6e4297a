@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-16T13:52:17.0149519	Tags for minecraft:block mod id eternal_starlight
+// 1.20.1	2026-09-16T23:02:57.4303855	Tags for minecraft:block mod id eternal_starlight
 20b3c5a5a15f1b69f68a44a095d38d3bd7b56119 data/c/tags/blocks/ores/deepsilver.json
 be1aa8761efdc0ca07210e3ac53bd0678186bc43 data/c/tags/blocks/ores/malarite.json
 4ae824bf159c2223e29a2d0f70fd8e836d42f4df data/c/tags/blocks/ores/saltpeter.json
@@ -77,6 +77,7 @@ f64daf0da9f07cd84f74344f0252af6bf33465ac data/eternal_starlight/tags/blocks/star
 9cf340b5c2bd1998152d5fb1999b74daf480ef69 data/eternal_starlight/tags/blocks/stripped_woods.json
 bd20a492db514b7a40f92bfd9d396f24e2b9139f data/eternal_starlight/tags/blocks/tooth_of_hunger_blocks.json
 6676d4a171b66a0d5e9c177f33e2d6510603b08a data/eternal_starlight/tags/blocks/torreya_logs.json
+fe2f5cc1edffa2ba059333a3a1bfe42ff5a9d742 data/eternal_starlight/tags/blocks/unaffected_by_oblivion.json
 9f8a39c6be0d825a8a6ab30cc3fe57964ac5d0a4 data/eternal_starlight/tags/blocks/wall_corals.json
 308afa382bb980e635ba19b9e3738e2acb7c6d49 data/eternal_starlight/tags/blocks/yeti_fur.json
 077121c2c86eb935c8f02795d436e4512a8fc94f data/eternal_starlight/tags/blocks/yeti_fur_carpets.json

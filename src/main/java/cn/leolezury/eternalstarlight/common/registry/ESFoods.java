@@ -18,7 +18,8 @@ public class ESFoods {
 	public static final Supplier<FoodProperties> VELVETUMOSS_BALL = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(1).saturationMod(0.1F).effect(new MobEffectInstance(MobEffects.WATER_BREATHING, 400, 0), 0.2F).build());
 	public static final Supplier<FoodProperties> CRINOA_BALL = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(6).saturationMod(0.8F).build());
 	public static final Supplier<FoodProperties> CRINOA_PORRIDGE = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(8).saturationMod(0.8F).build());
-	public static final Supplier<FoodProperties> ROASTED_FORGOTTEN_NOCTURNAL_MILLET = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(10).saturationMod(0.8F).build());
+	public static final Supplier<FoodProperties> POPPED_NOCTURNAL_MILLET_BUCKET = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(5).saturationMod(0.8F).fast().build());
+	public static final Supplier<FoodProperties> ROASTED_FORGOTTEN_NOCTURNAL_MILLET = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(10).saturationMod(0.8F).effect(new MobEffectInstance(ESMobEffects.OBLIVION.get(), 1800, 0), 1f).alwaysEat().build());
 	public static final Supplier<FoodProperties> PUNGENCY_FRUIT = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(4).saturationMod(0.6F).effect(new MobEffectInstance(MobEffects.CONFUSION, 120, 0), 0.8F).build());
 	public static final Supplier<FoodProperties> PUNGENCY_STEW = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(6).saturationMod(0.6F).effect(new MobEffectInstance(MobEffects.CONFUSION, 120, 0), 0.8F).build());
 	public static final Supplier<FoodProperties> SILVER_PUNGENCY_FRUIT = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(7).saturationMod(0.6F).effect(new MobEffectInstance(MobEffects.CONFUSION, 120, 0), 0.8F).effect(new MobEffectInstance(ESMobEffects.NUMBNESS.get(), 1200, 0), 1F).alwaysEat().build());

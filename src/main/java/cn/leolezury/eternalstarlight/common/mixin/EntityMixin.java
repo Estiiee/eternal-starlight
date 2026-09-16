@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -44,7 +45,7 @@ public abstract class EntityMixin {
 	public int tickCount;
 
 	@Unique
-	private boolean feetInWater = false;
+	private boolean bottomInWater = false;
 
 	@Inject(method = "isStateClimbable", at = @At("RETURN"), cancellable = true)
 	private void isStateClimbable(BlockState blockState, CallbackInfoReturnable<Boolean> cir) {
@@ -58,9 +59,9 @@ public abstract class EntityMixin {
 	private void tick(CallbackInfo ci) {
 		AABB box = getBoundingBox();
 		Vec3 bottomCenter = new Vec3(box.getCenter().x, box.minY, box.getCenter().z);
-		feetInWater = isInWater() && level().getFluidState(BlockPos.containing(bottomCenter)).is(FluidTags.WATER);
+		bottomInWater = isInWater() && level().getFluidState(BlockPos.containing(bottomCenter)).is(FluidTags.WATER);
 		Entity entity = (Entity)(Object)this;
-		if (level().isClientSide && feetInWater && entity instanceof LivingEntity living && living.getDeltaMovement().length() > 0.01 && living.getItemBySlot(EquipmentSlot.FEET).is(ESItems.AIR_SAC_BOOTS.get())) {
+		if (level().isClientSide && bottomInWater && entity instanceof LivingEntity living && living.getDeltaMovement().length() > 0.01 && living.getItemBySlot(EquipmentSlot.FEET).is(ESItems.AIR_SAC_BOOTS.get())) {
 			Vec3 pos = bottomCenter.offsetRandom(living.getRandom(), living.getBbWidth());
 			Vec3 speed = living.getDeltaMovement().normalize().offsetRandom(living.getRandom(), 0.3f).scale(-0.2);
 
@@ -126,6 +127,14 @@ public abstract class EntityMixin {
 	private void playHighSpeedSplashSound(Entity instance, SoundEvent soundEvent, float volume, float pitch, Operation<Void> original) {
 		if (!((Entity) (Object) this instanceof LivingEntity living && living.getItemBySlot(EquipmentSlot.LEGS).is(ESItems.UNREALIUM_LEGGINGS.get()))) {
 			original.call(instance, soundEvent, volume, pitch);
+		}
+	}
+
+	@Inject(method = "isInWall", at = @At("HEAD"), cancellable = true)
+	private void isInWall(CallbackInfoReturnable<Boolean> cir) {
+		Entity self = (Entity) (Object) this;
+		if (self instanceof Player player && player.hasEffect(ESMobEffects.OBLIVION.get())) {
+			cir.setReturnValue(false);
 		}
 	}
 }

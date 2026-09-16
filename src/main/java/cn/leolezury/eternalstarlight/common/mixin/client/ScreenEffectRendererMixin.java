@@ -1,7 +1,11 @@
 package cn.leolezury.eternalstarlight.common.mixin.client;
 
 import cn.leolezury.eternalstarlight.common.EternalStarlight;
+import cn.leolezury.eternalstarlight.common.client.handler.ESClientHandler;
 import cn.leolezury.eternalstarlight.common.registry.ESDataAttachments;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
@@ -11,7 +15,10 @@ import net.minecraft.client.renderer.ScreenEffectRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.state.BlockState;
+import org.apache.commons.lang3.tuple.Pair;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -24,6 +31,20 @@ public abstract class ScreenEffectRendererMixin {
 	@Unique
 	private static final Material ABYSSAL_FIRE_1 = new Material(TextureAtlas.LOCATION_BLOCKS, EternalStarlight.id("block/abyssal_fire_1"));
 
+	@WrapOperation(
+		method = "renderScreenEffect",
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ScreenEffectRenderer;renderTex(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lcom/mojang/blaze3d/vertex/PoseStack;)V")
+	)
+	private static void renderTex(
+		TextureAtlasSprite texture, PoseStack poseStack, Operation<Void> original,
+		@Local(name = "overlay") Pair<BlockState, BlockPos> overlay
+	) {
+		BlockState state = overlay.getLeft();
+		boolean allow = ESClientHandler.onRenderBlockOverlay(Minecraft.getInstance().player, state);
+		if (allow) {
+			original.call(texture, poseStack);
+		}
+	}
 	@Inject(method = "renderScreenEffect", at = @At(value = "TAIL"))
 	private static void renderScreenEffect(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci) {
 		if (minecraft.player != null && !minecraft.player.isSpectator()) {

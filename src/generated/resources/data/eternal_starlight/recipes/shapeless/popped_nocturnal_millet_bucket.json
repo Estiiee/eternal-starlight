@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "eternal_starlight:starcore"
+    },
+    {
+      "item": "eternal_starlight:nocturnal_millet"
+    },
+    {
+      "item": "eternal_starlight:nocturnal_millet"
+    },
+    {
+      "item": "eternal_starlight:nocturnal_millet"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "result": {
+    "item": "eternal_starlight:popped_nocturnal_millet_bucket"
+  }
+}

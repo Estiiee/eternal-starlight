@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-16T13:52:17.0439531	Tags for minecraft:item mod id eternal_starlight
+// 1.20.1	2026-09-16T22:32:33.1288132	Tags for minecraft:item mod id eternal_starlight
 49d6be28d9b8da6ebe3d7246980fb4a6109f43df data/c/tags/items/campfires.json
 e4fdfbaf8d9054e500c7eec455bfa598ca079aaa data/c/tags/items/crops/crinoa.json
 0f45e4de3f46badd50b06221cecbacd1794901a9 data/c/tags/items/crops/nocturnal_millet.json
@@ -118,7 +118,6 @@ c3ebce7e2a2b41cae11634857f71043a60c022e5 data/eternal_starlight/tags/items/foods
 1b358a5ddc4e169992763bf5c406a16124be40eb data/eternal_starlight/tags/items/foods/raw_fish.json
 5efc0e8686848a02120f2a5c0704b9a4c7dcb8fa data/eternal_starlight/tags/items/foods/raw_meat.json
 4bdfaed30fe26d3196a1e66603a283da8b56ec29 data/eternal_starlight/tags/items/foods/soup.json
-e427124859d1bbb00717f979ce08445f91c7a168 data/eternal_starlight/tags/items/foods/vegetable.json
 4bc262a4a119191bef44acd429519e480765f78a data/eternal_starlight/tags/items/foot_armor.json
 739ccc89f0e417ff163e88c7200bba629efcb874 data/eternal_starlight/tags/items/glacite_weapons.json
 e0cd0402fcd0d7ce13ed1beae0d116cf592790d6 data/eternal_starlight/tags/items/golem_forge_locators.json

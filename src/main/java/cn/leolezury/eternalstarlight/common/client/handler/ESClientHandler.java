@@ -58,10 +58,12 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
@@ -523,6 +525,10 @@ public class ESClientHandler {
 			RenderSystem.setShaderFogStart(RenderSystem.getShaderFogStart() + (float) fogVision.getValue());
 			RenderSystem.setShaderFogEnd(RenderSystem.getShaderFogEnd() + (float) fogVision.getValue());
 		}
+	}
+
+	public static boolean onRenderBlockOverlay(Player player, BlockState state) {
+		return !player.hasEffect(ESMobEffects.OBLIVION.get()) || state.is(ESTags.Blocks.UNAFFECTED_BY_OBLIVION);
 	}
 
 	public static boolean renderBossBar(GuiGraphics guiGraphics, LerpingBossEvent bossEvent, int x, int y) {

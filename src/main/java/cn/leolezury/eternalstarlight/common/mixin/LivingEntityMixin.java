@@ -10,6 +10,7 @@ import cn.leolezury.eternalstarlight.common.util.ESAccessoryUtil;
 import cn.leolezury.eternalstarlight.common.util.ESEntityUtil;
 import cn.leolezury.eternalstarlight.common.util.ESTags;
 import cn.leolezury.eternalstarlight.common.vfx.ScreenShakeVfx;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.BlockPos;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -204,6 +206,29 @@ public abstract class LivingEntityMixin {
 		} else if (itemStack.is(ESItems.PUNGENCY_STEW.get())) {
 			removeEffect(MobEffects.HUNGER);
 		}
+	}
+
+	@WrapOperation(
+		method = "eat(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V")
+	)
+	private void wrapShrink(ItemStack instance, int amount, Operation<Void> original) {
+		if (instance.is(ESItems.POPPED_NOCTURNAL_MILLET_BUCKET.get()) && instance.isDamageableItem()) {
+			instance.setDamageValue(instance.getDamageValue() + 1);
+		} else {
+			original.call(instance, amount);
+		}
+	}
+
+	@ModifyReturnValue(
+		method = "eat(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
+		at = @At("RETURN")
+	)
+	private ItemStack swapForBucket(ItemStack result) {
+		if (result.is(ESItems.POPPED_NOCTURNAL_MILLET_BUCKET.get()) && result.getDamageValue() >= result.getMaxDamage()) {
+			return new ItemStack(Items.BUCKET);
+		}
+		return result;
 	}
 
 	@WrapOperation(method = "triggerItemUseEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getUseAnimation()Lnet/minecraft/world/item/UseAnim;"))
