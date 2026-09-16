@@ -122,6 +122,7 @@ public class ESTags {
 		public static final TagKey<Item> DYED_YELLOW = create("dyed/yellow");
 		public static final TagKey<Item> FOODS = create("foods");
 		public static final TagKey<Item> FOODS_FRUIT = create("foods/fruit");
+		public static final TagKey<Item> FOODS_VEGETABLE = create("foods/vegetable");
 		public static final TagKey<Item> FOODS_BERRY = create("foods/berry");
 		public static final TagKey<Item> FOODS_RAW_MEAT = create("foods/raw_meat");
 		public static final TagKey<Item> FOODS_COOKED_MEAT = create("foods/cooked_meat");
