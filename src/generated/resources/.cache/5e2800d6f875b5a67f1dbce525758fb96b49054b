@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-16T22:32:33.1288132	Tags for minecraft:item mod id eternal_starlight
+// 1.20.1	2026-09-17T20:53:33.9313762	Tags for minecraft:item mod id eternal_starlight
 49d6be28d9b8da6ebe3d7246980fb4a6109f43df data/c/tags/items/campfires.json
 e4fdfbaf8d9054e500c7eec455bfa598ca079aaa data/c/tags/items/crops/crinoa.json
 0f45e4de3f46badd50b06221cecbacd1794901a9 data/c/tags/items/crops/nocturnal_millet.json
@@ -178,7 +178,7 @@ a817a74907f3821adcfe7d00c24e392f4e73298e data/eternal_starlight/tags/items/water
 b502bb8e3523e80dbe5286cf2f0a2abcfe585704 data/eternal_starlight/tags/items/whips.json
 4d857ddce6c70a82f2fcc6b2c7d86f2046a990ca data/eternal_starlight/tags/items/wind_crystals.json
 19d885759d3fe52812d1a858570aef9ed8721446 data/eternal_starlight/tags/items/wind_crystal_ingredients.json
-8ed91d90dd981a5e198abffb5b59a30c636eb9f6 data/eternal_starlight/tags/items/wip.json
+b0ffd54c379fd747e65cd0f1b9d17bcb0c74bdae data/eternal_starlight/tags/items/wip.json
 965d68e0c46c33982d7533ba5de6476174053fa4 data/eternal_starlight/tags/items/yeti_food.json
 308afa382bb980e635ba19b9e3738e2acb7c6d49 data/eternal_starlight/tags/items/yeti_fur.json
 077121c2c86eb935c8f02795d436e4512a8fc94f data/eternal_starlight/tags/items/yeti_fur_carpets.json
@@ -226,7 +226,7 @@ a43c478f699776ae4fbe23b7f8ec7314a53a2e13 data/minecraft/tags/items/saplings.json
 dd4f2743ac2568809b6b15d14f06aecf6248ee38 data/minecraft/tags/items/shovels.json
 5195028b3baf9e068b43edbf5cb3ab36d4b1bd60 data/minecraft/tags/items/signs.json
 7fcacbdd69c3e4e3cb32dc893b3d1cd0b6bc310a data/minecraft/tags/items/slabs.json
-395bc043681ec5dded6c2ed7c2cfbd7638fd6949 data/minecraft/tags/items/small_flowers.json
+65887477df8a5182c30b8e287db420307cd39a3c data/minecraft/tags/items/small_flowers.json
 ebcc4ae4c545daab4f4774ee9051934a544712d3 data/minecraft/tags/items/smelts_to_glass.json
 1c0c879505957dea201eac55d82aa48e54ee193a data/minecraft/tags/items/stairs.json
 a8695a95c491930d90a9e490edb0e1eebf6d6b73 data/minecraft/tags/items/stone_crafting_materials.json

@@ -22,6 +22,7 @@ public class ESBiomeData {
 	public static final ResourceKey<BiomeData> TORREYA_FOREST = create("torreya_forest");
 	public static final ResourceKey<BiomeData> CRYSTALLIZED_DESERT = create("crystallized_desert");
 	public static final ResourceKey<BiomeData> LUCENT_MYCELIUM_ISLE = create("lucent_mycelium_isle");
+	public static final ResourceKey<BiomeData> SOLARIS_ISLES = create("solaris_isles");
 	public static final ResourceKey<BiomeData> SHIMMER_RIVER = create("shimmer_river");
 	public static final ResourceKey<BiomeData> ETHER_RIVER = create("ether_river");
 	public static final ResourceKey<BiomeData> SHIMMER_RIVER_TRANSITION = create("shimmer_river_transition");
@@ -33,7 +34,6 @@ public class ESBiomeData {
 	public static final ResourceKey<BiomeData> THE_ABYSS_TRANSITION = create("the_abyss_transition");
 	public static final ResourceKey<BiomeData> WARM_SHORE = create("warm_shore");
 	public static final ResourceKey<BiomeData> GRIM_SHORE = create("grim_shore");
-	public static final ResourceKey<BiomeData> SOLARIS_ISLES = create("solaris_isles");
 
 	public static void bootstrap(BootstapContext<BiomeData> context) {
 		HolderGetter<Biome> biomeHolderGetter = context.lookup(Registries.BIOME);
@@ -79,6 +79,10 @@ public class ESBiomeData {
 			.hasRivers(false)
 			.build());
 
+		context.register(SOLARIS_ISLES, new BiomeData.Builder(biomeHolderGetter.getOrThrow(ESBiomes.SOLARIS_ISLES), 64, 6)
+			.hasRivers(false)
+			.build());
+
 		context.register(STARLIT_SEA, new BiomeData.Builder(biomeHolderGetter.getOrThrow(ESBiomes.STARLIT_SEA), 30, 8)
 			.isOcean(true)
 			.build());
@@ -118,11 +122,6 @@ public class ESBiomeData {
 
 		context.register(GRIM_SHORE, new BiomeData.Builder(biomeHolderGetter.getOrThrow(ESBiomes.GRIM_SHORE), 61, 12)
 			.build());
-
-		context.register(SOLARIS_ISLES, new BiomeData.Builder(biomeHolderGetter.getOrThrow(ESBiomes.SOLARIS_ISLES), 65, 14)
-			.build()
-		);
-
 	}
 
 	public static ResourceKey<BiomeData> create(String name) {

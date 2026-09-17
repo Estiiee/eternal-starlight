@@ -31,6 +31,7 @@ public class ESBiomes {
 	public static final ResourceKey<Biome> TORREYA_FOREST = create("torreya_forest");
 	public static final ResourceKey<Biome> CRYSTALLIZED_DESERT = create("crystallized_desert");
 	public static final ResourceKey<Biome> LUCENT_MYCELIUM_ISLE = create("lucent_mycelium_isle");
+	public static final ResourceKey<Biome> SOLARIS_ISLES = create("solaris_isles");
 	public static final ResourceKey<Biome> SHIMMER_RIVER = create("shimmer_river");
 	public static final ResourceKey<Biome> ETHER_RIVER = create("ether_river");
 	public static final ResourceKey<Biome> STARLIT_SEA = create("starlit_sea");
@@ -40,7 +41,6 @@ public class ESBiomes {
 	public static final ResourceKey<Biome> THE_ABYSS = create("the_abyss");
 	public static final ResourceKey<Biome> WARM_SHORE = create("warm_shore");
 	public static final ResourceKey<Biome> GRIM_SHORE = create("grim_shore");
-	public static final ResourceKey<Biome> SOLARIS_ISLES = create("solaris_isles");
 
 	public static final Music MUSIC_TRANQUILITY = new Music(ESSoundEvents.MUSIC_DIMENSION.asHolder(), 1200, 12000, false);
 	public static final Music MUSIC_FOREST = new Music(ESSoundEvents.MUSIC_BIOME_STARLIGHT_FOREST.asHolder(), 1200, 12000, false);
@@ -67,6 +67,7 @@ public class ESBiomes {
 		context.register(TORREYA_FOREST, baseBiomeBuilder(baseEffectsBuilder().fogColor(7229604).foliageColorOverride(7229604).skyColor(7229604).grassColorOverride(7229604).backgroundMusic(MUSIC_TORREYA_FOREST), baseLushSpawnBuilder(), torreyaForestGenSettings(featureHolderGetter, carverHolderGetter)).build());
 		context.register(CRYSTALLIZED_DESERT, baseBiomeBuilder(baseEffectsBuilder().fogColor(8349826).foliageColorOverride(8349826).skyColor(8349826).grassColorOverride(8349826).backgroundMusic(MUSIC_DESERT), desertSpawns(), desertGenSettings(featureHolderGetter, carverHolderGetter)).hasPrecipitation(false).temperature(2.0f).build());
 		context.register(LUCENT_MYCELIUM_ISLE, baseBiomeBuilder(baseEffectsBuilder().grassColorOverride(5260652).backgroundMusic(MUSIC_FOREST), mushroomSpawns(), mushroomGenSettings(featureHolderGetter, carverHolderGetter)).build());
+		context.register(SOLARIS_ISLES, baseBiomeBuilder(baseEffectsBuilder().backgroundMusic(MUSIC_FOREST), solarisSpawns(), solarisGenSettings(featureHolderGetter, carverHolderGetter)).temperature(2.0f).build());
 		context.register(SHIMMER_RIVER, baseBiomeBuilder(baseEffectsBuilder(), riverSpawns(), riverGenSettings(featureHolderGetter, carverHolderGetter)).build());
 		context.register(ETHER_RIVER, baseBiomeBuilder(baseEffectsBuilder().fogColor(14417883).foliageColorOverride(14417883).skyColor(14417883).grassColorOverride(14417883).waterColor(14417883).waterFogColor(14417883), baseSpawnBuilder(), etherRiverGenSettings(featureHolderGetter, carverHolderGetter)).build());
 		context.register(STARLIT_SEA, baseBiomeBuilder(baseEffectsBuilder().backgroundMusic(MUSIC_STARLIT_SEA), baseAquaticSpawnBuilder(), oceanGenSettings(featureHolderGetter, carverHolderGetter)).build());
@@ -76,7 +77,6 @@ public class ESBiomes {
 		context.register(THE_ABYSS, baseBiomeBuilder(baseEffectsBuilder(false).waterFogColor(3409191).backgroundMusic(MUSIC_THE_ABYSS), theAbyssSpawns(), theAbyssGenSettings(featureHolderGetter, carverHolderGetter)).build());
 		context.register(WARM_SHORE, baseBiomeBuilder(baseEffectsBuilder(), baseLushSpawnBuilder(), warmShoreGenSettings(featureHolderGetter, carverHolderGetter)).build());
 		context.register(GRIM_SHORE, baseBiomeBuilder(baseEffectsBuilder(), baseLushSpawnBuilder(), grimShoreGenSettings(featureHolderGetter, carverHolderGetter)).build());
-		context.register(SOLARIS_ISLES, baseBiomeBuilder(baseEffectsBuilder(), baseLushSpawnBuilder(), solarisIslesGenSettings(featureHolderGetter, carverHolderGetter)).build());
 	}
 
 	private static Biome.BiomeBuilder baseBiomeBuilder(BiomeSpecialEffects.Builder specialEffects, MobSpawnSettings.Builder mobSpawnSettings, BiomeGenerationSettings.Builder genSettings) {
@@ -171,6 +171,13 @@ public class ESBiomes {
 			.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ESEntities.ENT.get(), 30, 1, 2))
 			.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ESEntities.RATLIN.get(), 24, 1, 3))
 			.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ESEntities.SHADOW_SNAIL.get(), 18, 1, 2));
+	}
+
+	private static MobSpawnSettings.Builder solarisSpawns() {
+		return baseSpawnBuilder(false)
+			.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ESEntities.ENT.get(), 10, 1, 2))
+			.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ESEntities.RATLIN.get(), 8, 1, 3))
+			.addSpawn(MobCategory.CREATURE, new MobSpawnSettings.SpawnerData(ESEntities.SHADOW_SNAIL.get(), 6, 1, 2));
 	}
 
 	private static MobSpawnSettings.Builder riverSpawns() {
@@ -393,6 +400,14 @@ public class ESBiomes {
 		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.MUSHROOM_FOREST);
 		builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ESPlacedFeatures.MUSHROOM_VEGETATION);
 		builder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ESPlacedFeatures.MONOLITH);
+
+		return builder;
+	}
+
+	private static BiomeGenerationSettings.Builder solarisGenSettings(HolderGetter<PlacedFeature> featureGetter, HolderGetter<ConfiguredWorldCarver<?>> carverGetter) {
+		BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(featureGetter, carverGetter);
+
+		builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, ESPlacedFeatures.SOLARIS_ISLAND);
 
 		return builder;
 	}

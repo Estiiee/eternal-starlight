@@ -69,7 +69,6 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -93,7 +92,6 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.synth.SimplexNoise;
 import net.minecraft.world.level.material.Fluids;
-import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.HashMap;
@@ -352,6 +350,9 @@ public class ESClientSetupHandler {
 		ESBlocks.TWILVEWRYM_HERB,
 		ESBlocks.STELLAFLY_BUSH,
 		ESBlocks.GLIMMERFLY_BUSH,
+		ESBlocks.SACRED_STARLIGHT_FLOWER,
+		ESBlocks.POTTED_SACRED_STARLIGHT_FLOWER,
+		ESBlocks.CRESCENTLEAF,
 		ESBlocks.GOLDEN_GRASS,
 		ESBlocks.TALL_GOLDEN_GRASS,
 		ESBlocks.CRINOA,
