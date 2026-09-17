@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-17T20:53:33.9313762	Tags for minecraft:item mod id eternal_starlight
+// 1.20.1	2026-09-17T21:19:44.0876292	Tags for minecraft:item mod id eternal_starlight
 49d6be28d9b8da6ebe3d7246980fb4a6109f43df data/c/tags/items/campfires.json
 e4fdfbaf8d9054e500c7eec455bfa598ca079aaa data/c/tags/items/crops/crinoa.json
 0f45e4de3f46badd50b06221cecbacd1794901a9 data/c/tags/items/crops/nocturnal_millet.json
@@ -201,7 +201,7 @@ d38249fab22efad1375ca4ab1d7e084894c894fa data/forge/tags/items/raw_materials.jso
 4ee447c5b8c185a2d98b38ce0672139b63c8e9a3 data/forge/tags/items/sand.json
 9ed1a8054322f0da7a2db0c72f73e1d03cfd2a3d data/forge/tags/items/sandstone.json
 23dca88af7508491751c8358fc4c077fecff4429 data/forge/tags/items/seeds.json
-689c437cd44d855d93ba19066b05f1bb81bddded data/forge/tags/items/stone.json
+585f4927d81ecf724152035a2bb189a6d1ee7153 data/forge/tags/items/stone.json
 57a69d47b12657aced57f5cd9c0519ebdb81b393 data/forge/tags/items/storage_blocks.json
 a5552acd0bcce4b9df024f31b63a4ae0fd2b7eb5 data/forge/tags/items/tools/bows.json
 8af23a9373c4892446c56e21cd2176f91a5eccf6 data/forge/tags/items/tools/crossbows.json
