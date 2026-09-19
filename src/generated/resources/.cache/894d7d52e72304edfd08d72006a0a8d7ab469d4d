@@ -1,4 +1,4 @@
-// 1.20.1	2026-06-02T18:51:48.3202609	Tags for minecraft:entity_type mod id eternal_starlight
+// 1.20.1	2026-09-19T10:53:40.876282	Tags for minecraft:entity_type mod id eternal_starlight
 7c4a83216410b5cc42cab8c49f3ef1afb4bb9ebc data/eternal_starlight/tags/entity_types/abyssal_fire_immune.json
 8743c915a1d96aaeb66cac454e3d6e442b05f134 data/eternal_starlight/tags/entity_types/aethersent_golem_targets.json
 a79c212a1c1e34dbccc974a1f7f1158bb63c0e3d data/eternal_starlight/tags/entity_types/affects_progression.json
@@ -10,6 +10,7 @@ a37c8a7cf9e25ba9178196b0552e6c5e79567ffa data/eternal_starlight/tags/entity_type
 0c2f80824fcdaa8414ab4e318eaddffd67b2b3a2 data/eternal_starlight/tags/entity_types/gleech_immune.json
 f627b828af90e448f9c5322878730dddd94748ff data/eternal_starlight/tags/entity_types/immune_to_infested.json
 c43d01a50f219d7da8aa79acbcbb23f69ad6de8b data/eternal_starlight/tags/entity_types/lunar_monstrosity_allies.json
+0e54aad097d83f668f6708eddbb7b5702b39847a data/eternal_starlight/tags/entity_types/solaris_isles_inhabitants.json
 ded0ab0de371764e36186fe4a07d5b614e8ceb32 data/eternal_starlight/tags/entity_types/starfire_bird_afraid_of.json
 6d5db5a9d4927ea7ba771b9a9ff6d43d80ccce30 data/eternal_starlight/tags/entity_types/starlight_golem_allies.json
 a37c8a7cf9e25ba9178196b0552e6c5e79567ffa data/eternal_starlight/tags/entity_types/stranghoul_cannot_hunt.json

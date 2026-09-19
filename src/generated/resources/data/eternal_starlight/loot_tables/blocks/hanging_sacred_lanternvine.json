@@ -27,7 +27,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "eternal_starlight:sacred_lanternvine"
         }
       ],
       "rolls": 1.0
