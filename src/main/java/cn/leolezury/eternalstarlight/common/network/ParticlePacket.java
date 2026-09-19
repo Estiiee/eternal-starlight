@@ -13,13 +13,19 @@ public class ParticlePacket implements ESPacket {
 	private final ParticleOptions particle;
 	private final double x, y, z;
 	private final double dx, dy, dz;
+	private final boolean longDistance;
 
 	public ParticlePacket(ParticleOptions particle,
 						  double x, double y, double z,
-						  double dx, double dy, double dz) {
+						  double dx, double dy, double dz, boolean longDistance) {
 		this.particle = particle;
 		this.x = x; this.y = y; this.z = z;
 		this.dx = dx; this.dy = dy; this.dz = dz;
+		this.longDistance = longDistance;
+	}
+
+	public ParticlePacket(ParticleOptions particle, double x, double y, double z, double dx, double dy, double dz) {
+		this(particle, x, y, z, dx, dy, dz, true);
 	}
 
 	public static ParticlePacket read(FriendlyByteBuf buf) {
@@ -30,7 +36,8 @@ public class ParticlePacket implements ESPacket {
 		double dx = buf.readDouble();
 		double dy = buf.readDouble();
 		double dz = buf.readDouble();
-		return new ParticlePacket(particle, x, y, z, dx, dy, dz);
+		boolean longDistance = buf.readBoolean();
+		return new ParticlePacket(particle, x, y, z, dx, dy, dz, longDistance);
 	}
 
 	@Override
@@ -42,6 +49,7 @@ public class ParticlePacket implements ESPacket {
 		buf.writeDouble(dx);
 		buf.writeDouble(dy);
 		buf.writeDouble(dz);
+		buf.writeBoolean(longDistance);
 	}
 
 	private static ParticleOptions readParticle(FriendlyByteBuf buf) {
@@ -87,4 +95,5 @@ public class ParticlePacket implements ESPacket {
 	public double dx() { return dx; }
 	public double dy() { return dy; }
 	public double dz() { return dz; }
+	public boolean longDistance() { return longDistance; }
 }

@@ -26,6 +26,7 @@ public class ESPackets {
 	public static final PacketInfo<UpdateBookProgressionPacket> UPDATE_BOOK_PROGRESSION = new PacketInfo<>(UpdateBookProgressionPacket.TYPE, UpdateBookProgressionPacket.STREAM_CODEC, UpdateBookProgressionPacket::handle);
 	public static final PacketInfo<OpenBookPacket> OPEN_BOOK = new PacketInfo<>(OpenBookPacket.TYPE, OpenBookPacket.STREAM_CODEC, OpenBookPacket::handle);
 	public static final PacketInfo<TriggerEntityEventPacket> TRIGGER_ENTITY_EVENT = new PacketInfo<>(TriggerEntityEventPacket.TYPE, TriggerEntityEventPacket.STREAM_CODEC, TriggerEntityEventPacket::handle);
+	public static final PacketInfo<UpdateBossBarPacket> UPDATE_BOSS_BAR = new PacketInfo<>(UpdateBossBarPacket.TYPE, UpdateBossBarPacket.STREAM_CODEC, UpdateBossBarPacket::handle);
 
 	public record PacketInfo<T extends CustomPacketPayload>(CustomPacketPayload.Type<T> type, StreamCodec<RegistryFriendlyByteBuf, T> streamCodec, Handler<T> handler) {
 
@@ -68,5 +69,6 @@ public class ESPackets {
 		register(EternalStarlight.id("update_weather"), UpdateWeatherPacket::read);
 		register(EternalStarlight.id("sync_attachments"), SyncAttachmentsPacket::read);
 		register(EternalStarlight.id("simple_action"), SimpleActionPacket::read);
+		register(EternalStarlight.id("update_boss_bar"), UpdateBossBarPacket::read);
 	}
 }

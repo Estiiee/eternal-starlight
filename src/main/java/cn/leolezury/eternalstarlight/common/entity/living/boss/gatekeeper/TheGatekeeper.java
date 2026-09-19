@@ -107,7 +107,7 @@ public class TheGatekeeper extends ESBoss implements Npc, Merchant {
 		this.noCulling = true;
 	}
 
-	private final ESServerBossEvent bossEvent = new ESServerBossEvent(this, getUUID(), BossEvent.BossBarColor.WHITE, false);
+	private final ESServerBossEvent bossEvent = new ESServerBossEvent(this, ESServerBossEvent.THE_GATEKEEPER, BossEvent.BossBarColor.WHITE, false);
 
 	private final BehaviorManager<TheGatekeeper> behaviorManager = new BehaviorManager<>(this, List.of(
 		new GatekeeperStepBackPhase(),
@@ -207,7 +207,6 @@ public class TheGatekeeper extends ESBoss implements Npc, Merchant {
 		}
 
 		restockCooldown = tag.getInt(TAG_RESTOCK_COOLDOWN);
-		bossEvent.setId(getUUID());
 
 		if (this.offers == null) {
 			this.offers = new MerchantOffers();

@@ -15,9 +15,7 @@ import cn.leolezury.eternalstarlight.common.data.ESDimensions;
 import cn.leolezury.eternalstarlight.common.data.ESRegistries;
 import cn.leolezury.eternalstarlight.common.entity.interfaces.SpellCaster;
 import cn.leolezury.eternalstarlight.common.entity.living.boss.ESBoss;
-import cn.leolezury.eternalstarlight.common.entity.living.boss.gatekeeper.TheGatekeeper;
-import cn.leolezury.eternalstarlight.common.entity.living.boss.golem.StarlightGolem;
-import cn.leolezury.eternalstarlight.common.entity.living.boss.monstrosity.LunarMonstrosity;
+import cn.leolezury.eternalstarlight.common.entity.living.boss.ESServerBossEvent;
 import cn.leolezury.eternalstarlight.common.entity.projectile.SoulitSpectator;
 import cn.leolezury.eternalstarlight.common.item.combat.DualWieldingSwordItem;
 import cn.leolezury.eternalstarlight.common.network.SimpleActionPacket;
@@ -74,7 +72,7 @@ import java.util.stream.Collectors;
 
 public class ESClientHandler {
 	public static BookLoader books;
-	public static final Set<Mob> BOSSES = Collections.newSetFromMap(new WeakHashMap<>());
+	public static final Map<UUID, Integer> BOSS_BAR_TYPES = new HashMap<>();
 	public static final List<WorldVisualEffect> VISUAL_EFFECTS = new ArrayList<>();
 	public static final List<ScreenShake> SCREEN_SHAKES = new ArrayList<>();
 	private static final ResourceLocation GUI_BARS_LOCATION = new ResourceLocation("minecraft", "textures/gui/bars.png");
@@ -331,7 +329,7 @@ public class ESClientHandler {
 	}
 
 	private static void clearWorldSpecificVars() {
-		BOSSES.clear();
+		BOSS_BAR_TYPES.clear();
 		VISUAL_EFFECTS.clear();
 		SCREEN_SHAKES.clear();
 		GUI_CRESTS.clear();
@@ -533,26 +531,17 @@ public class ESClientHandler {
 
 	public static boolean renderBossBar(GuiGraphics guiGraphics, LerpingBossEvent bossEvent, int x, int y) {
 		ResourceLocation barLocation;
-		Mob boss = null;
-		if (BOSSES.isEmpty()) {
-			return false;
-		}
-		for (Mob mob : BOSSES) {
-			if (mob.getUUID().equals(bossEvent.getId())) {
-				boss = mob;
-				break;
+		switch (BOSS_BAR_TYPES.getOrDefault(bossEvent.getId(), 0))
+		{
+			case ESServerBossEvent.THE_GATEKEEPER -> barLocation = ResourceLocation.fromNamespaceAndPath(EternalStarlight.ID, "textures/gui/bars/the_gatekeeper.png");
+			case ESServerBossEvent.STARLIGHT_GOLEM -> barLocation = ResourceLocation.fromNamespaceAndPath(EternalStarlight.ID, "textures/gui/bars/starlight_golem.png");
+			case ESServerBossEvent.LUNAR_MONSTROSITY -> barLocation = ResourceLocation.fromNamespaceAndPath(EternalStarlight.ID, "textures/gui/bars/lunar_monstrosity.png");
+			case ESServerBossEvent.LUNAR_MONSTROSITY_SOUL -> barLocation = ResourceLocation.fromNamespaceAndPath(EternalStarlight.ID, "textures/gui/bars/lunar_monstrosity_soul.png");
+			default ->
+			{
+				return false;
 			}
 		}
-		if (boss instanceof TheGatekeeper) {
-			barLocation = new ResourceLocation(EternalStarlight.ID, "textures/gui/bars/the_gatekeeper.png");
-		} else if (boss instanceof StarlightGolem) {
-			barLocation = new ResourceLocation(EternalStarlight.ID, "textures/gui/bars/starlight_golem.png");
-		} else if (boss instanceof LunarMonstrosity lunarMonstrosity) {
-			barLocation = new ResourceLocation(EternalStarlight.ID, "textures/gui/bars/lunar_monstrosity" + (lunarMonstrosity.getPhase() > 0 ? "_soul.png" : ".png"));
-		} else {
-			return false;
-		}
-
 		drawBar(guiGraphics, x, y, bossEvent, barLocation);
 		Component component = bossEvent.getName();
 		int textWidth = Minecraft.getInstance().font.width(component);

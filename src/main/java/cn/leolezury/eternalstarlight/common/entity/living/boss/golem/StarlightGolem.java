@@ -68,7 +68,7 @@ public class StarlightGolem extends ESBoss implements RayAttackUser {
 		this.noCulling = true;
 	}
 
-	private final ESServerBossEvent bossEvent = new ESServerBossEvent(this, getUUID(), BossEvent.BossBarColor.BLUE, false);
+	private final ESServerBossEvent bossEvent = new ESServerBossEvent(this, ESServerBossEvent.STARLIGHT_GOLEM, BossEvent.BossBarColor.BLUE, false);
 
 	private final BehaviorManager<StarlightGolem> behaviorManager = new BehaviorManager<>(this, List.of(
 		new StarlightGolemLaserBeamPhase(),
@@ -137,12 +137,6 @@ public class StarlightGolem extends ESBoss implements RayAttackUser {
 
 	public BehaviorManager<StarlightGolem> getBehaviorManager() {
 		return behaviorManager;
-	}
-
-	@Override
-	public void readAdditionalSaveData(CompoundTag compoundTag) {
-		super.readAdditionalSaveData(compoundTag);
-		bossEvent.setId(getUUID());
 	}
 
 	@Override

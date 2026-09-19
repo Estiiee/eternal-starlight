@@ -438,6 +438,7 @@ public class ESCommonSetupHandler {
 		strategy.register(ESPackets.UPDATE_BOOK_PROGRESSION);
 		strategy.register(ESPackets.OPEN_BOOK);
 		strategy.register(ESPackets.TRIGGER_ENTITY_EVENT);
+		strategy.register(ESPackets.UPDATE_BOSS_BAR);
 	}
 
 	 */
