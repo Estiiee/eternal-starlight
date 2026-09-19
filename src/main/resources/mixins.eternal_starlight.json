@@ -33,6 +33,7 @@
     "JigsawStructureMixin",
     "LevelChunkMixin",
     "LivingEntityMixin",
+    "NaturalSpawnerMixin",
     "PlaceCommandMixin",
     "PlayerListMixin",
     "PlayerMixin",
