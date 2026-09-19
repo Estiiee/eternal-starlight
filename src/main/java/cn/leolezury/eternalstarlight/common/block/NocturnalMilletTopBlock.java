@@ -14,6 +14,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -25,7 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class NocturnalMilletTopBlock extends CropBlock {
+public class NocturnalMilletTopBlock extends Block implements BonemealableBlock {
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
 	public static final BooleanProperty FORGOTTEN = BooleanProperty.create("forgotten");
 	public static final BooleanProperty WITHERED = BooleanProperty.create("withered");
@@ -33,22 +35,10 @@ public class NocturnalMilletTopBlock extends CropBlock {
 
 	public NocturnalMilletTopBlock(Properties properties) {
 		super(properties);
-		this.registerDefaultState(getStateDefinition().any().setValue(this.getAgeProperty(), 0).setValue(FORGOTTEN, false).setValue(WITHERED, false));
-	}
+		this.registerDefaultState(getStateDefinition().any().setValue(AGE, 0).setValue(FORGOTTEN, false).setValue(WITHERED, false));	}
 
-	@Override
-	protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-		return state.is(ESBlocks.NOCTURNAL_MILLET_STALK.get());
-	}
-
-	@Override
-	protected IntegerProperty getAgeProperty() {
-		return AGE;
-	}
-
-	@Override
-	public int getMaxAge() {
-		return 2;
+	public int getAge(BlockState state) {
+		return state.getValue(AGE);
 	}
 
 	@Override
@@ -56,6 +46,10 @@ public class NocturnalMilletTopBlock extends CropBlock {
 		builder.add(AGE, FORGOTTEN, WITHERED);
 	}
 
+	@Override
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+		return level.getBlockState(pos.below()).is(ESBlocks.NOCTURNAL_MILLET_STALK.get());
+	}
 	@Override
 	public boolean isRandomlyTicking(BlockState state) {
 		return true;
@@ -71,7 +65,7 @@ public class NocturnalMilletTopBlock extends CropBlock {
 						for (int z = -5; z <= 5; z++) {
 							BlockPos nearbyPos = pos.offset(x, y, z);
 							Block block = level.getBlockState(nearbyPos).getBlock();
-							if (block instanceof CropBlock && !(block instanceof NocturnalMilletBottomBlock) && !(block instanceof NocturnalMilletTopBlock)) {
+							if (block instanceof CropBlock) {
 								level.destroyBlock(nearbyPos, false);
 							}
 						}
@@ -87,7 +81,7 @@ public class NocturnalMilletTopBlock extends CropBlock {
 							for (int z = -5; z <= 5; z++) {
 								BlockPos nearbyPos = pos.offset(x, y, z);
 								Block block = level.getBlockState(nearbyPos).getBlock();
-								if (block instanceof CropBlock && !(block instanceof NocturnalMilletBottomBlock) && !(block instanceof NocturnalMilletTopBlock)) {
+								if (block instanceof CropBlock) {
 									level.destroyBlock(nearbyPos, false);
 									absorption++;
 								}
@@ -99,31 +93,50 @@ public class NocturnalMilletTopBlock extends CropBlock {
 					level.setBlock(pos, state.setValue(AGE, random.nextInt(4 - absorption) == 0 ? 2 : age).setValue(FORGOTTEN, true), Block.UPDATE_CLIENTS);
 				}
 			} else {
-				if (age < this.getMaxAge() - 1) {
-					level.setBlock(pos, this.getStateForAge(age + random.nextInt(2)), Block.UPDATE_CLIENTS);
+				if (age < 1) {
+					level.setBlock(pos, this.defaultBlockState().setValue(AGE, age + random.nextInt(2)), Block.UPDATE_CLIENTS);
 				} else {
-					level.setBlock(pos, this.getStateForAge(getMaxAge()), Block.UPDATE_CLIENTS);
-				}
+					level.setBlock(pos, this.defaultBlockState().setValue(AGE, 2), Block.UPDATE_CLIENTS);				}
 			}
 		}
 	}
 
 	@Override
 	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClientSide) {
-		return state.getValue(WITHERED);
+		return state.getValue(WITHERED) || this.getAge(state) < 2;
+	}
+
+	@Override
+	public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+		return random.nextFloat() < 0.1;
 	}
 
 	@Override
 	public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-		BlockState belowState = level.getBlockState(pos.below());
-		level.setBlockAndUpdate(pos, state.setValue(WITHERED, false));
-		if (belowState.is(ESBlocks.NOCTURNAL_MILLET_STALK.get()) && belowState.getValue(WITHERED)) {
-			level.setBlockAndUpdate(pos.below(), belowState.setValue(WITHERED, false));
+		if (state.getValue(WITHERED)) {
+			BlockState belowState = level.getBlockState(pos.below());
+			level.setBlockAndUpdate(pos, state.setValue(WITHERED, false));
+			if (belowState.is(ESBlocks.NOCTURNAL_MILLET_STALK.get()) && belowState.getValue(WITHERED)) {
+				level.setBlockAndUpdate(pos.below(), belowState.setValue(WITHERED, false));
+			}
+		} else {
+			this.growCrops(level, pos, state);
 		}
+	}
+
+	public void growCrops(Level level, BlockPos pos, BlockState state) {
+		int targetAge = this.getAge(state) + 1;
+		if (targetAge > 2) {
+			targetAge = 2;
+		}
+		level.setBlock(pos, state.setValue(AGE, targetAge), Block.UPDATE_CLIENTS);
 	}
 
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+		if (!state.canSurvive(level, pos)) {
+			return Blocks.AIR.defaultBlockState();
+		}
 		BlockState belowState = level.getBlockState(pos.below());
 		if (direction == Direction.DOWN && belowState.is(ESBlocks.NOCTURNAL_MILLET_STALK.get())) {
 			return state.setValue(FORGOTTEN, belowState.getValue(FORGOTTEN));
@@ -174,8 +187,8 @@ public class NocturnalMilletTopBlock extends CropBlock {
 	}
 
 	@Override
-	protected ItemLike getBaseSeedId() {
-		return ESItems.NOCTURNAL_MILLET_SEEDS.get();
+	public ItemStack getCloneItemStack(BlockGetter pLevel, BlockPos pPos, BlockState pState) {
+		return new ItemStack(ESItems.NOCTURNAL_MILLET_SEEDS.get());
 	}
 
 	@Override

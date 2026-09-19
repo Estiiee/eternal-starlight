@@ -167,16 +167,6 @@ public class ForgeCommonEvents {
 		}
 
 		@SubscribeEvent
-		public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-			if (!event.isCanceled()) {
-				boolean allow = ESCommonHandler.onLeftClickBlock(event.getLevel(), event.getPos(), event.getLevel().getBlockState(event.getPos()));
-				if (!allow) {
-					event.setCanceled(true);
-				}
-			}
-		}
-
-		@SubscribeEvent
 		public static void onBlockBroken(BlockEvent.BreakEvent event) {
 			ESCommonHandler.onBlockBroken(event.getPlayer(), event.getPos(), event.getState());
 		}
