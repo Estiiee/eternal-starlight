@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-17T21:19:44.0676293	Tags for minecraft:block mod id eternal_starlight
+// 1.20.1	2026-09-21T17:52:54.0037089	Tags for minecraft:block mod id eternal_starlight
 20b3c5a5a15f1b69f68a44a095d38d3bd7b56119 data/c/tags/blocks/ores/deepsilver.json
 be1aa8761efdc0ca07210e3ac53bd0678186bc43 data/c/tags/blocks/ores/malarite.json
 4ae824bf159c2223e29a2d0f70fd8e836d42f4df data/c/tags/blocks/ores/saltpeter.json
@@ -112,7 +112,7 @@ a6178348bb61588af5e42836d11784d36ad01d98 data/minecraft/tags/blocks/flower_pots.
 a3b5c288e24581425d5cf66d5082a574adaf87a9 data/minecraft/tags/blocks/guarded_by_piglins.json
 e6d222bcccd09b1bedf366a51c27712110a1b594 data/minecraft/tags/blocks/impermeable.json
 b58ea2fa8a7953cf65d8720c57a475e5a124a782 data/minecraft/tags/blocks/inside_step_sound_blocks.json
-4eb9690d6a970d9a28c95fafb91d718395c9ed69 data/minecraft/tags/blocks/leaves.json
+4d76cd8b050ae5c9c072510ac3891df1b8cded88 data/minecraft/tags/blocks/leaves.json
 b503cc4b594242e321f7797ca2925502c5f661bb data/minecraft/tags/blocks/logs.json
 b503cc4b594242e321f7797ca2925502c5f661bb data/minecraft/tags/blocks/logs_that_burn.json
 25a4e55c3725e21769cabf0ef2b970a8b9f82da2 data/minecraft/tags/blocks/maintains_farmland.json

@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-17T21:19:44.0876292	Tags for minecraft:item mod id eternal_starlight
+// 1.20.1	2026-09-21T17:52:54.0467087	Tags for minecraft:item mod id eternal_starlight
 49d6be28d9b8da6ebe3d7246980fb4a6109f43df data/c/tags/items/campfires.json
 e4fdfbaf8d9054e500c7eec455bfa598ca079aaa data/c/tags/items/crops/crinoa.json
 0f45e4de3f46badd50b06221cecbacd1794901a9 data/c/tags/items/crops/nocturnal_millet.json
@@ -216,7 +216,7 @@ e776e170cd38897fbd678c9fd270eb0106110e3f data/minecraft/tags/items/creeper_ignit
 739968c9ec0cbeb500fb47ccac16b4b8e69192a5 data/minecraft/tags/items/freeze_immune_wearables.json
 1e4e95143a045056cd49874265e9e15021c43dd8 data/minecraft/tags/items/hanging_signs.json
 60688e2cf468d1d5df54af863bc83ec83a541efb data/minecraft/tags/items/hoes.json
-4eb9690d6a970d9a28c95fafb91d718395c9ed69 data/minecraft/tags/items/leaves.json
+4d76cd8b050ae5c9c072510ac3891df1b8cded88 data/minecraft/tags/items/leaves.json
 b503cc4b594242e321f7797ca2925502c5f661bb data/minecraft/tags/items/logs.json
 b503cc4b594242e321f7797ca2925502c5f661bb data/minecraft/tags/items/logs_that_burn.json
 ada55840ef497a601c2ae11d9c3b421c81fec0dd data/minecraft/tags/items/pickaxes.json

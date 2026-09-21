@@ -13,12 +13,12 @@ public class LunarTreeGrower extends AbstractMegaTreeGrower {
 	@Nullable
 	@Override
 	protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean bees) {
-		return ESConfiguredFeatures.LUNAR;
+		return ESConfiguredFeatures.LUNAR_COLORED;
 	}
 
 	@Nullable
 	@Override
 	protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredMegaFeature(RandomSource random) {
-		return ESConfiguredFeatures.LUNAR_HUGE;
+		return ESConfiguredFeatures.LUNAR_COLORED_HUGE;
 	}
 }

@@ -34,6 +34,10 @@ public class ESBlocks {
 	// lunar wood
 	public static final RegistryObject<Block, LeavesBlock> LUNAR_LEAVES = BLOCKS.register("lunar_leaves",
 		() -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).mapColor(MapColor.COLOR_LIGHT_BLUE)));
+	public static final RegistryObject<Block, LeavesBlock> CYAN_LUNAR_LEAVES = BLOCKS.register("cyan_lunar_leaves",
+		() -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).mapColor(MapColor.COLOR_CYAN)));
+	public static final RegistryObject<Block, LeavesBlock> PURPLE_LUNAR_LEAVES = BLOCKS.register("purple_lunar_leaves",
+		() -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES).mapColor(MapColor.COLOR_PURPLE)));
 	public static final RegistryObject<Block, RotatedPillarBlock> LUNAR_LOG = BLOCKS.register("lunar_log",
 		() -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).mapColor(MapColor.COLOR_BLACK)));
 	public static final RegistryObject<Block, RotatedPillarBlock> LUNAR_WOOD = BLOCKS.register("lunar_wood",

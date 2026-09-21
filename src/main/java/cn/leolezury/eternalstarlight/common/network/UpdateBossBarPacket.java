@@ -15,7 +15,6 @@ public class UpdateBossBarPacket implements ESPacket {
 	public UpdateBossBarPacket(UUID barId, int barType) {
 		this.barId = barId;
 		this.barType = barType;
-
 	}
 
 	public static UpdateBossBarPacket read(FriendlyByteBuf buf) {
