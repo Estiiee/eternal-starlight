@@ -80,8 +80,7 @@ public class ESBlockStateProvider extends BlockStateProvider {
 		leaves(ESBlocks.CRADLEWOOD_LEAVES.get());
 		woodSet(ESBlocks.CRADLEWOOD_LOG.get(), ESBlocks.CRADLEWOOD_WOOD.get(), ESBlocks.CRADLEWOOD_PLANKS.get(), ESBlocks.STRIPPED_CRADLEWOOD_LOG.get(), ESBlocks.STRIPPED_CRADLEWOOD_WOOD.get(), ESBlocks.CRADLEWOOD_DOOR.get(), true, ESBlocks.CRADLEWOOD_TRAPDOOR.get(), true, ESBlocks.CRADLEWOOD_PRESSURE_PLATE.get(), ESBlocks.CRADLEWOOD_BUTTON.get(), ESBlocks.CRADLEWOOD_FENCE.get(), ESBlocks.CRADLEWOOD_FENCE_GATE.get(), ESBlocks.CRADLEWOOD_SLAB.get(), ESBlocks.CRADLEWOOD_STAIRS.get(), ESBlocks.CRADLEWOOD_SIGN.get(), ESBlocks.CRADLEWOOD_WALL_SIGN.get(), ESBlocks.CRADLEWOOD_HANGING_SIGN.get(), ESBlocks.CRADLEWOOD_WALL_HANGING_SIGN.get());
 		cross(ESBlocks.CRADLEWOOD_SAPLING.get());
-		pottedPlant(ESBlocks.POTTED_CRADLEWOOD_SAPLING.get(), blockTexture(ESBlocks.CRADLEWOOD_SAPLING.get()));
-
+		pottedPlant(ESBlocks.POTTED_CRADLEWOOD_SAPLING.get(), key(ESBlocks.CRADLEWOOD_SAPLING.get()).withPrefix("block/potted_"));
 		// stones
 		randomlyMirroredBlock(ESBlocks.GRIMSTONE.get());
 		slabBlock(ESBlocks.GRIMSTONE_SLAB.get(), blockTexture(ESBlocks.GRIMSTONE.get()), blockTexture(ESBlocks.GRIMSTONE.get()));
@@ -109,6 +108,7 @@ public class ESBlockStateProvider extends BlockStateProvider {
 		stoneSet(ESBlocks.VOIDSTONE_TILES.get(), ESBlocks.VOIDSTONE_TILE_SLAB.get(), ESBlocks.VOIDSTONE_TILE_STAIRS.get(), ESBlocks.VOIDSTONE_TILE_WALL.get());
 		simpleBlock(ESBlocks.CRACKED_VOIDSTONE_TILES.get());
 		simpleBlock(ESBlocks.GLOWING_VOIDSTONE.get());
+		speleothem(ESBlocks.VOIDSTONE_SPIKE.get());
 
 		simpleBlock(ESBlocks.ETERNAL_ICE.get());
 		simpleBlock(ESBlocks.THIN_ETERNAL_ICE.get(), models().cubeAll(name(ESBlocks.THIN_ETERNAL_ICE.get()), blockTexture(ESBlocks.THIN_ETERNAL_ICE.get())).renderType(TRANSLUCENT));
@@ -1606,6 +1606,17 @@ public class ESBlockStateProvider extends BlockStateProvider {
 			return ConfiguredModel.builder().modelFile(modelFile).rotationX(state.getValue(IcicleBlock.TIP_DIRECTION) == Direction.UP ? 0 : 180).build();
 		}));
 	}
+
+	private void speleothem(Block block) {
+		getVariantBuilder(block).forAllStates((state -> {
+			String dir = state.getValue(SpeleothemBlock.TIP_DIRECTION) == Direction.UP ? "up" : "down";
+			String thickness = state.getValue(SpeleothemBlock.THICKNESS).getSerializedName();
+			String suffix = "_" + dir + "_" + thickness;
+			ModelFile modelFile = models().cross(name(block) + suffix, blockTexture(block).withSuffix(suffix)).renderType(CUTOUT);
+			return ConfiguredModel.builder().modelFile(modelFile).build();
+		}));
+	}
+
 
 	private void layered(Block layered, ResourceLocation texture) {
 		getVariantBuilder(layered).forAllStates((state -> {

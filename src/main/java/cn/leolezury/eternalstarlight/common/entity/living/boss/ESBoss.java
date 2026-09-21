@@ -23,8 +23,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -166,6 +168,9 @@ public class ESBoss extends Monster implements MultiBehaviorUser {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
+		if (source.is(DamageTypes.IN_WALL) && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+			return false;
+		}
 		boolean success = super.hurt(source, amount);
 		if (success && source.getEntity() instanceof ServerPlayer player && !fightParticipants.contains(player.getUUID())) {
 			fightParticipants.add(player.getUUID());
