@@ -109,7 +109,7 @@ public class HammerItem extends TieredItem {
 		if (target.onGround() && level instanceof ServerLevel serverLevel) {
 			for (int i = 0; i < 360; i += 10) {
 				Vec3 vec3 = ESMathUtil.rotationToPosition(
-					target.blockPosition().below().getCenter().add(0, -0.1, 0),
+					target.getOnPos().getCenter().add(0, -0.1, 0),
 					1.75f, 0, i
 				);
 

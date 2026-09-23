@@ -4,6 +4,7 @@ import cn.leolezury.eternalstarlight.common.crest.Crest;
 import cn.leolezury.eternalstarlight.common.data.ESRegistries;
 import cn.leolezury.eternalstarlight.common.network.ParticlePacket;
 import cn.leolezury.eternalstarlight.common.particle.OrbitalTrailParticleOptions;
+import cn.leolezury.eternalstarlight.common.particle.SurroundingTrailParticleOptions;
 import cn.leolezury.eternalstarlight.common.platform.ESPlatform;
 import cn.leolezury.eternalstarlight.common.registry.ESDataAttachments;
 import net.minecraft.core.Holder;
@@ -229,7 +230,7 @@ public class ESCrestUtil {
 		}
 		ESDataAttachments.OLD_ACTIVE_CRESTS.setData(player, activeCrests);
 		if (!set.isEmpty() && player.level() instanceof ServerLevel serverLevel && player.tickCount % 100 == 0) {
-			ESPlatform.INSTANCE.sendToAllClients(serverLevel, new ParticlePacket(OrbitalTrailParticleOptions.magic(player), player.getX(), player.getY(), player.getZ(), 0, 0.02, 0));
+			ESPlatform.INSTANCE.sendToAllClients(serverLevel, new ParticlePacket(SurroundingTrailParticleOptions.magic(player), player.getX(), player.getY(), player.getZ(), 0, 0.02, 0));
 		}
 	}
 }

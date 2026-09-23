@@ -113,7 +113,7 @@ public abstract class LaserBeamRenderer<T extends RayAttack> extends EntityRende
 				(float)(bodyEndDiff.add(sideOffset.scale(-1)).y),
 				(float)(bodyEndDiff.add(sideOffset.scale(-1)).z))
 			.color(r, g, b, a)
-			.uv(0.1f / getTextureWidth(), 1f)
+			.uv(0f, 1f)
 			.overlayCoords(OverlayTexture.NO_OVERLAY)
 			.uv2(LightTexture.FULL_BRIGHT)
 			.normal(normalMat, 0f, 1f, 0f)
@@ -123,7 +123,7 @@ public abstract class LaserBeamRenderer<T extends RayAttack> extends EntityRende
 				(float)(bodyEndDiff.add(sideOffset).y),
 				(float)(bodyEndDiff.add(sideOffset).z))
 			.color(r, g, b, a)
-			.uv(0.1f / getTextureWidth(), 0f)
+			.uv(0f, 0f)
 			.overlayCoords(OverlayTexture.NO_OVERLAY)
 			.uv2(LightTexture.FULL_BRIGHT)
 			.normal(normalMat, 0f, 1f, 0f)

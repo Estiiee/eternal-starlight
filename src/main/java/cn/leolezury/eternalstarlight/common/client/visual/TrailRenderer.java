@@ -37,6 +37,7 @@ public class TrailRenderer {
 
 		Vec3[] upperOffsets = new Vec3[size];
 		Vec3[] lowerOffsets = new Vec3[size];
+		boolean[] flipped = new boolean[size];
 		for (int i = 0; i < size; i++) {
 			Vec3 tangent = tangents[i];
 			if (tangent.lengthSqr() < 0.5) {
@@ -51,6 +52,7 @@ public class TrailRenderer {
 			if (i > 0 && upperOffsets[i].normalize().dot(upperOffsets[i - 1].normalize()) < 0) {
 				upperOffsets[i] = upperOffsets[i].reverse();
 				lowerOffsets[i] = lowerOffsets[i].reverse();
+				flipped[i] = true;
 			}
 		}
 
@@ -67,34 +69,42 @@ public class TrailRenderer {
 			float fromAlpha = solid ? 1 : Mth.clamp(a * from.progressFactor(), 0, 1);
 			float toAlpha = solid ? 1 : Mth.clamp(a * to.progressFactor(), 0, 1);
 
+			float fuV = flipped[i] ? v1 : v0;
+			float flV = flipped[i] ? v0 : v1;
+			float tuV = flipped[i + 1] ? v1 : v0;
+			float tlV = flipped[i + 1] ? v0 : v1;
+
+			float fromU = Mth.lerp(from.progressFactor(), u0, u1);
+			float toU = Mth.lerp(to.progressFactor(), u0, u1);
+
 			if (particleFormat) {
 				consumer.vertex(pose.pose(), (float) fromUpper.x(), (float) fromUpper.y(), (float) fromUpper.z())
-					.uv(Mth.lerp(from.progressFactor(), u0, u1), v0)
+					.uv(fromU, fuV)
 					.color(r, g, b, fromAlpha)
 					.uv2(light)
 					.endVertex();
 
 				consumer.vertex(pose.pose(), (float) toUpper.x(), (float) toUpper.y(), (float) toUpper.z())
-					.uv(Mth.lerp(to.progressFactor(), u0, u1), v0)
+					.uv(toU, tuV)
 					.color(r, g, b, toAlpha)
 					.uv2(light)
 					.endVertex();
 
 				consumer.vertex(pose.pose(), (float) toLower.x(), (float) toLower.y(), (float) toLower.z())
-					.uv(Mth.lerp(to.progressFactor(), u0, u1), v1)
+					.uv(toU, tlV)
 					.color(r, g, b, toAlpha)
 					.uv2(light)
 					.endVertex();
 
 				consumer.vertex(pose.pose(), (float) fromLower.x(), (float) fromLower.y(), (float) fromLower.z())
-					.uv(Mth.lerp(from.progressFactor(), u0, u1), v1)
+					.uv(fromU, flV)
 					.color(r, g, b, fromAlpha)
 					.uv2(light)
 					.endVertex();
 			} else {
 				consumer.vertex(pose.pose(), (float) fromUpper.x(), (float) fromUpper.y(), (float) fromUpper.z())
 					.color(r, g, b, fromAlpha)
-					.uv(Mth.lerp(from.progressFactor(), u0, u1), v0)
+					.uv(fromU, fuV)
 					.overlayCoords(OverlayTexture.NO_OVERLAY)
 					.uv2(light)
 					.normal(pose.normal(), 0, 1, 0)
@@ -102,7 +112,7 @@ public class TrailRenderer {
 
 				consumer.vertex(pose.pose(), (float) toUpper.x(), (float) toUpper.y(), (float) toUpper.z())
 					.color(r, g, b, toAlpha)
-					.uv(Mth.lerp(to.progressFactor(), u0, u1), v0)
+					.uv(toU, tuV)
 					.overlayCoords(OverlayTexture.NO_OVERLAY)
 					.uv2(light)
 					.normal(pose.normal(), 0, 1, 0)
@@ -110,7 +120,7 @@ public class TrailRenderer {
 
 				consumer.vertex(pose.pose(), (float) toLower.x(), (float) toLower.y(), (float) toLower.z())
 					.color(r, g, b, toAlpha)
-					.uv(Mth.lerp(to.progressFactor(), u0, u1), v1)
+					.uv(toU, tlV)
 					.overlayCoords(OverlayTexture.NO_OVERLAY)
 					.uv2(light)
 					.normal(pose.normal(), 0, 1, 0)
@@ -118,7 +128,7 @@ public class TrailRenderer {
 
 				consumer.vertex(pose.pose(), (float) fromLower.x(), (float) fromLower.y(), (float) fromLower.z())
 					.color(r, g, b, fromAlpha)
-					.uv(Mth.lerp(from.progressFactor(), u0, u1), v1)
+					.uv(fromU, flV)
 					.overlayCoords(OverlayTexture.NO_OVERLAY)
 					.uv2(light)
 					.normal(pose.normal(), 0, 1, 0)

@@ -225,7 +225,7 @@ public class ESConfig {
 		spawnInEternalStarlight = BUILDER.define("spawnInEternalStarlight", false);
 		respawnInEternalStarlight = BUILDER.define("respawnInEternalStarlight", false);
 		startWithGuidebook = BUILDER.define("startWithGuidebook", false);
-		aethersentMeteorDropRate = BUILDER.defineInRange("aethersentMeteorDropRate", 0.0005, 0.0, 1.0);
+		aethersentMeteorDropRate = BUILDER.defineInRange("aethersentMeteorDropRate", 0.0001, 0.0, 1.0);
 		aethersentMeteorReplaceBlocks = BUILDER.define("aethersentMeteorReplaceBlocks", false);
 		mobMaxTearyTicks = BUILDER.defineInRange("mobMaxTearyTicks", 200, 0, 100000);
 		blockUnknownAttachmentWarning = BUILDER.define("blockUnknownAttachmentWarning", true);

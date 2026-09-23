@@ -5,6 +5,7 @@ import cn.leolezury.eternalstarlight.common.particle.*;
 import cn.leolezury.eternalstarlight.common.platform.registry.RegistrationProvider;
 import cn.leolezury.eternalstarlight.common.platform.registry.RegistryObject;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
@@ -74,12 +75,12 @@ public class ESParticles {
 				}
 			});
 
-	public static final RegistryObject<ParticleType<?>, ParticleType<OrbitalTrailParticleOptions>> ORBITAL_TRAIL =
-		PARTICLE_TYPES.register("orbital_trail", () ->
-			new ParticleType<>(false, OrbitalTrailParticleOptions.DESERIALIZER) {
+	public static final RegistryObject<ParticleType<?>, ParticleType<SurroundingTrailParticleOptions>> SURROUNDING_TRAIL  =
+		PARTICLE_TYPES.register("surrounding_trail", () ->
+			new ParticleType<>(false, SurroundingTrailParticleOptions.DESERIALIZER) {
 				@Override
-				public Codec<OrbitalTrailParticleOptions> codec() {
-					return OrbitalTrailParticleOptions.CODEC.codec();
+				public Codec<SurroundingTrailParticleOptions> codec() {
+					return SurroundingTrailParticleOptions.CODEC.codec();
 				}
 			});
 
@@ -170,6 +171,24 @@ public class ESParticles {
 				@Override
 				public Codec<GeyserParticleOptions> codec() {
 					return GeyserParticleOptions.codec(ESParticles.GEYSER_PLUME.get()).codec();
+				}
+			});
+
+	public static final RegistryObject<ParticleType<?>, ParticleType<OrbitalTrailParticleOptions>> ORBITAL_FLARE =
+		PARTICLE_TYPES.register("orbital_flare", () ->
+			new ParticleType<>(false, OrbitalTrailParticleOptions.DESERIALIZER) {
+				@Override
+				public Codec<OrbitalTrailParticleOptions> codec() {
+					return OrbitalTrailParticleOptions.codec(ESParticles.ORBITAL_FLARE.get()).codec();
+				}
+			});
+
+	public static final RegistryObject<ParticleType<?>, ParticleType<RippleParticleOptions>> RIPPLE  =
+		PARTICLE_TYPES.register("ripple", () ->
+			new ParticleType<>(false, RippleParticleOptions.DESERIALIZER) {
+				@Override
+				public Codec<RippleParticleOptions> codec() {
+					return RippleParticleOptions.codec(ESParticles.RIPPLE.get()).codec();
 				}
 			});
 
