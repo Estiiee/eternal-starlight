@@ -182,7 +182,6 @@ public class SolarCreeper extends ESBoss implements TrailOwner {
 		this.entityData.define(SOLAR_RAY_LENGTH_3, 0f);
 		this.entityData.define(SOLAR_RAY_LENGTH_4, 0f);
 		this.entityData.define(SOLAR_RAY_LENGTH_5, 0f);
-		this.entityData.define(SOLAR_RAY_LENGTH_5, 0f);
 		this.entityData.define(SOLAR_RAY_WIDTH_0, 0f);
 		this.entityData.define(SOLAR_RAY_WIDTH_1, 0f);
 		this.entityData.define(SOLAR_RAY_WIDTH_2, 0f);

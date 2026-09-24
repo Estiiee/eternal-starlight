@@ -192,6 +192,15 @@ public class ESParticles {
 				}
 			});
 
+	public static final RegistryObject<ParticleType<?>, ParticleType<OrbitalTrailParticleOptions>> ORBITAL_SPACE_MATTER  =
+		PARTICLE_TYPES.register("orbital_space_matter", () ->
+			new ParticleType<>(false, OrbitalTrailParticleOptions.DESERIALIZER) {
+				@Override
+				public Codec<OrbitalTrailParticleOptions> codec() {
+					return OrbitalTrailParticleOptions.codec(ESParticles.ORBITAL_SPACE_MATTER.get()).codec();
+				}
+			});
+
 	public static final RegistryObject<ParticleType<?>, SimpleParticleType> METEOR = PARTICLE_TYPES.register("meteor", () -> new SimpleParticleType(false));
 	public static final RegistryObject<ParticleType<?>, SimpleParticleType> PARRY = PARTICLE_TYPES.register("parry", () -> new SimpleParticleType(false));
 	public static final RegistryObject<ParticleType<?>, SimpleParticleType> AETHERSENT_SMOKE = PARTICLE_TYPES.register("aethersent_smoke", () -> new SimpleParticleType(false));
