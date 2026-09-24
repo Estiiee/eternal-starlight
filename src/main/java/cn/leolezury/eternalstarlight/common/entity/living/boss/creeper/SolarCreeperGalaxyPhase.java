@@ -1,9 +1,10 @@
 package cn.leolezury.eternalstarlight.common.entity.living.boss.creeper;
 
 import cn.leolezury.eternalstarlight.common.entity.living.phase.BehaviorPhase;
-import cn.leolezury.eternalstarlight.common.entity.projectile.PlanetProjectile;
+import cn.leolezury.eternalstarlight.common.entity.projectile.OrbitalPlanet;
 import cn.leolezury.eternalstarlight.common.registry.ESEntities;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -14,7 +15,7 @@ public class SolarCreeperGalaxyPhase extends BehaviorPhase<SolarCreeper> {
 	public static final int ID = 13;
 	public static final int DURATION = 300;
 
-	private final List<PlanetProjectile> planets = new ArrayList<>();
+	private final List<OrbitalPlanet> planets = new ArrayList<>();
 
 	private float[] planetOrbitRadii;
 	private float[] planetOrbitSpeeds;
@@ -45,7 +46,7 @@ public class SolarCreeperGalaxyPhase extends BehaviorPhase<SolarCreeper> {
 			float orbitAngle = (Mth.TWO_PI / count) * i + entity.getRandom().nextFloat() * 0.5f;
 			planetOrbitRadii[i] = orbitRadius;
 			planetOrbitSpeeds[i] = orbitSpeed;
-			PlanetProjectile planet = new PlanetProjectile(ESEntities.PLANET_PROJECTILE.get(), entity.level());
+			OrbitalPlanet planet = new OrbitalPlanet(ESEntities.ORBITAL_PLANET.get(), entity.level());
 			planet.setPos(entity.getX() + Math.cos(orbitAngle) * orbitRadius, entity.getY() + entity.getBbHeight() / 2, entity.getZ() + Math.sin(orbitAngle) * orbitRadius);
 			planet.setOwner(entity);
 			planet.setOrbitTarget(entity);
@@ -67,9 +68,9 @@ public class SolarCreeperGalaxyPhase extends BehaviorPhase<SolarCreeper> {
 			return;
 		}
 		if (ticks >= 50 && ticks <= 250) {
-			planets.removeIf(p -> p.isRemoved());
+			planets.removeIf(Entity::isRemoved);
 			for (int i = 0; i < planets.size(); i++) {
-				PlanetProjectile planet = planets.get(i);
+				OrbitalPlanet planet = planets.get(i);
 				if (planet.isRemoved() || i >= planetOrbitRadii.length) {
 					continue;
 				}

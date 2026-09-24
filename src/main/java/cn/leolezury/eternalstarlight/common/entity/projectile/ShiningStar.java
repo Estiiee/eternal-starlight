@@ -19,11 +19,12 @@ import org.joml.Vector4f;
 
 import java.util.UUID;
 
-public class SolarBouncingProjectile extends ThrowableProjectile implements TrailOwner {
+public class ShiningStar extends ThrowableProjectile implements TrailOwner {
 	private static final String TAG_TARGET = "target";
 
-	public SolarBouncingProjectile(EntityType<? extends SolarBouncingProjectile> entityType, Level level) {
+	public ShiningStar(EntityType<? extends ShiningStar> entityType, Level level) {
 		super(entityType, level);
+		setNoGravity(true);
 	}
 
 	@Override
@@ -55,6 +56,10 @@ public class SolarBouncingProjectile extends ThrowableProjectile implements Trai
 					targetId = null;
 				}
 			}
+			if (target != null && target.isAlive()) {
+				Vec3 diff = target.position().add(0, target.getBbHeight() / 2, 0).subtract(position()).normalize();
+				setDeltaMovement(getDeltaMovement().add(diff.scale(0.03)));
+			}
 			if (tickCount > 300) {
 				explode();
 			}
@@ -62,37 +67,32 @@ public class SolarBouncingProjectile extends ThrowableProjectile implements Trai
 	}
 
 	@Override
-	protected void onHitBlock(BlockHitResult hitResult) {
-		super.onHitBlock(hitResult);
-		switch (hitResult.getDirection().getAxis()) {
-			case X -> setDeltaMovement(getDeltaMovement().multiply(-1, 1, 1));
-			case Y -> setDeltaMovement(getDeltaMovement().multiply(1, -1, 1));
-			case Z -> setDeltaMovement(getDeltaMovement().multiply(1, 1, -1));
-		}
-		if (target != null && target.isAlive()) {
-			Vec3 toTarget = target.position().add(0, target.getBbHeight() / 2, 0).subtract(position()).normalize().scale(0.05);
-			setDeltaMovement(getDeltaMovement().add(toTarget));
+	protected void onHit(HitResult hitResult) {
+		super.onHit(hitResult);
+		if (!level().isClientSide && hitResult.getType() != HitResult.Type.MISS && (target == null || level().getEntitiesOfClass(Entity.class, getBoundingBox().inflate(2.5)).contains(target))) {
+			explode();
 		}
 	}
 
 	@Override
-	protected void onHit(HitResult hitResult) {
-		if (!level().isClientSide && hitResult.getType() == HitResult.Type.ENTITY) {
-			explode();
-		} else {
-			super.onHit(hitResult);
+	protected void onHitBlock(BlockHitResult hitResult) {
+		super.onHitBlock(hitResult);
+		switch (hitResult.getDirection().getAxis()) {
+			case X -> setDeltaMovement(getDeltaMovement().multiply(-0.5, 1, 1));
+			case Y -> setDeltaMovement(getDeltaMovement().multiply(1, -0.5, 1));
+			case Z -> setDeltaMovement(getDeltaMovement().multiply(1, 1, -0.5));
 		}
 	}
 
 	private void explode() {
 		if (!level().isClientSide) {
-			for (LivingEntity entity : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(3))) {
+			for (LivingEntity entity : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2.5))) {
 				if (ESEntityUtil.shouldHarm(getOwner() != null ? getOwner() : this, entity)) {
-					entity.hurt(ESDamageTypes.getIndirectEntityDamageSource(level(), ESDamageTypes.METEOR, this, getOwner()), 5);
+					entity.hurt(ESDamageTypes.getIndirectEntityDamageSource(level(), ESDamageTypes.METEOR, this, getOwner()), 8);
 				}
 			}
 			if (level() instanceof ServerLevel serverLevel) {
-				RippleParticleOptions.addFlareExplosionRippleParticles(serverLevel, getX(), getY() + getBbHeight() / 2, getZ(), random);
+				RippleParticleOptions.addBlueExplosionRippleParticles(serverLevel, getX(), getY() + getBbHeight() / 2, getZ(), random);
 			}
 		}
 		discard();
@@ -121,7 +121,7 @@ public class SolarBouncingProjectile extends ThrowableProjectile implements Trai
 
 	@Override
 	public TrailEffect createNewTrail() {
-		return new TrailEffect(0.15f, 6);
+		return new TrailEffect(0.1f, 5);
 	}
 
 	@Override
