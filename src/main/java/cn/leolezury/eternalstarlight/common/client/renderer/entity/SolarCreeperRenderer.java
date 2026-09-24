@@ -4,10 +4,7 @@ import cn.leolezury.eternalstarlight.common.EternalStarlight;
 import cn.leolezury.eternalstarlight.common.client.ESRenderType;
 import cn.leolezury.eternalstarlight.common.client.model.entity.OrbModel;
 import cn.leolezury.eternalstarlight.common.client.model.entity.SolarCreeperModel;
-import cn.leolezury.eternalstarlight.common.entity.living.boss.creeper.SolarCreeper;
-import cn.leolezury.eternalstarlight.common.entity.living.boss.creeper.SolarCreeperIntroPhase;
-import cn.leolezury.eternalstarlight.common.entity.living.boss.creeper.SolarCreeperSolarRayPhase;
-import cn.leolezury.eternalstarlight.common.entity.living.boss.creeper.SolarCreeperSupernovaPhase;
+import cn.leolezury.eternalstarlight.common.entity.living.boss.creeper.*;
 import cn.leolezury.eternalstarlight.common.util.ESMathUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -32,6 +29,7 @@ import org.joml.Vector3f;
 public class SolarCreeperRenderer<T extends SolarCreeper> extends MobRenderer<T, SolarCreeperModel<T>> {
 	private static final ResourceLocation ENTITY_TEXTURE = EternalStarlight.id("textures/entity/solar_creeper/solar_creeper.png");
 	private static final ResourceLocation SUN_TEXTURE = EternalStarlight.id("textures/entity/solar_creeper/sun.png");
+	private static final ResourceLocation BLACK_HOLE_TEXTURE = EternalStarlight.id("textures/entity/solar_creeper/black_hole.png");
 	private static final ResourceLocation LASER_JITTER_TEXTURE = EternalStarlight.id("textures/entity/solar_creeper/solar_ray_jitter.png");
 	private static final ResourceLocation LASER_STATIC_TEXTURE = EternalStarlight.id("textures/entity/solar_creeper/solar_ray_static.png");
 
@@ -47,7 +45,8 @@ public class SolarCreeperRenderer<T extends SolarCreeper> extends MobRenderer<T,
 		if (entity.tickCount < 3) return;
 		int state = entity.getBehaviorState();
 		float animationTicks = entity.getAnimationTicks(partialTicks);
-		float bodyScale = 1, sunScale = 0, shineScale = 0, fullDuration = 0;
+		float bodyScale = 1, sunScale = 0, blackHoleScale = 0, shineScale = 0, fullDuration = 0;
+		int sunColor = -1;
 		Vec3 pos = new Vec3(
 			Mth.lerp(partialTicks, entity.xo, entity.getX()),
 			Mth.lerp(partialTicks, entity.yo, entity.getY()),
@@ -78,6 +77,18 @@ public class SolarCreeperRenderer<T extends SolarCreeper> extends MobRenderer<T,
 			shineScale = SolarCreeperSolarRayPhase.SHINE_SCALE.calculate(animationTicks / SolarCreeperSolarRayPhase.DURATION);
 			fullDuration = SolarCreeperSolarRayPhase.DURATION;
 		}
+		if (state == SolarCreeperBlackHolePhase.ID) {
+			float progress = animationTicks / SolarCreeperBlackHolePhase.DURATION;
+			float baseScale = 2 * SolarCreeperBlackHolePhase.SUN_SCALE.calculate(progress);
+			float jitterFreq = SolarCreeperBlackHolePhase.JITTER_FREQ.calculate(progress);
+			float jitter = 1 + 0.12f * Mth.sin(jitterFreq * animationTicks * 0.3f);
+			sunScale = baseScale * jitter;
+			float redness = SolarCreeperBlackHolePhase.SUN_REDNESS.calculate(progress);
+			sunColor = FastColor.ARGB32.color(255, 255, (int) Mth.lerp(redness, 255, 80), (int) Mth.lerp(redness, 255, 80));
+			blackHoleScale = SolarCreeperBlackHolePhase.BLACK_HOLE_SCALE.calculate(progress);
+			shineScale = SolarCreeperBlackHolePhase.SHINE_SCALE.calculate(progress) * jitter;
+			fullDuration = SolarCreeperBlackHolePhase.DURATION;
+		}
 
 		if (bodyScale > 0) {
 			poseStack.pushPose();
@@ -89,7 +100,7 @@ public class SolarCreeperRenderer<T extends SolarCreeper> extends MobRenderer<T,
 		}
 		if (sunScale > 0) {
 			poseStack.pushPose();
-			if (state == SolarCreeperSolarRayPhase.ID) {
+			if (state == SolarCreeperSolarRayPhase.ID || state == SolarCreeperBlackHolePhase.ID) {
 				poseStack.translate(sunAbovePos.x - pos.x, sunAbovePos.y - pos.y, sunAbovePos.z - pos.z);
 			} else {
 				poseStack.translate(0.0F, entity.getBbHeight() / 2, 0.0F);
@@ -100,12 +111,28 @@ public class SolarCreeperRenderer<T extends SolarCreeper> extends MobRenderer<T,
 			RenderType renderType = this.sunModel.renderType(SUN_TEXTURE);
 			VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
 			this.sunModel.setupAnim(entity, 0, 0, getBob(entity, partialTicks), 0, 0);
+			float r = FastColor.ARGB32.red(sunColor) / 255f;
+			float g = FastColor.ARGB32.green(sunColor) / 255f;
+			float b = FastColor.ARGB32.blue(sunColor) / 255f;
+			float a = FastColor.ARGB32.alpha(sunColor) / 255f;
+			this.sunModel.renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, r, g, b, a);
+			poseStack.popPose();
+		}
+		if (blackHoleScale > 0) {
+			poseStack.pushPose();
+			poseStack.translate(sunAbovePos.x - pos.x, sunAbovePos.y - pos.y, sunAbovePos.z - pos.z);
+			poseStack.scale(blackHoleScale, blackHoleScale, blackHoleScale);
+			poseStack.scale(-1.0F, -1.0F, 1.0F);
+			poseStack.translate(0.0F, -1.5F, 0.0F);
+			RenderType renderType = this.sunModel.renderType(BLACK_HOLE_TEXTURE);
+			VertexConsumer vertexConsumer = buffer.getBuffer(renderType);
+			this.sunModel.setupAnim(entity, 0, 0, getBob(entity, partialTicks), 0, 0);
 			this.sunModel.renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			poseStack.popPose();
 		}
 		if (shineScale > 0) {
 			poseStack.pushPose();
-			if (state == SolarCreeperSolarRayPhase.ID) {
+			if (state == SolarCreeperSolarRayPhase.ID || state == SolarCreeperBlackHolePhase.ID) {
 				poseStack.translate(sunAbovePos.x - pos.x, sunAbovePos.y - pos.y, sunAbovePos.z - pos.z);
 			} else {
 				poseStack.translate(0.0F, entity.getBbHeight() / 2, 0.0F);
@@ -118,34 +145,26 @@ public class SolarCreeperRenderer<T extends SolarCreeper> extends MobRenderer<T,
 			Matrix4f poseMat = pose.pose();
 			Matrix3f normalMat = pose.normal();
 
-			for (int i = 0; i < 5; i++) {
-				int c0 = FastColor.ARGB32.color(255, 255, 213, 74);
-				float r0 = FastColor.ARGB32.red(c0) / 255f;
-				float g0 = FastColor.ARGB32.green(c0) / 255f;
-				float b0 = FastColor.ARGB32.blue(c0) / 255f;
-				float a0 = FastColor.ARGB32.alpha(c0) / 255f;
+			int rays = state == SolarCreeperBlackHolePhase.ID ? 2 : 5;
+			int color = state == SolarCreeperBlackHolePhase.ID ? FastColor.ARGB32.color(255, 139, 38, 19) : FastColor.ARGB32.color(255, 255, 213, 74);
+			int edgeColor = FastColor.ARGB32.color(0, 255, 213, 74);
 
+			for (int i = 0; i < rays; i++) {
 				vertexConsumer.vertex(poseMat, 0f, 0f, 0f)
-					.color(r0, g0, b0, a0)
+					.color(color)
 					.uv(0f, 0f)
 					.overlayCoords(OverlayTexture.NO_OVERLAY)
 					.uv2(LightTexture.FULL_BRIGHT)
 					.normal(normalMat, 0f, 1f, 0f)
 					.endVertex();
 
-				float angle = i * Mth.TWO_PI / 5 + (animationTicks / fullDuration) * Mth.PI * 1.5f;
-
-				int c1 = FastColor.ARGB32.color(0, 255, 213, 74);
-				float r1 = FastColor.ARGB32.red(c1) / 255f;
-				float g1 = FastColor.ARGB32.green(c1) / 255f;
-				float b1 = FastColor.ARGB32.blue(c1) / 255f;
-				float a1 = FastColor.ARGB32.alpha(c1) / 255f;
+				float angle = i * Mth.TWO_PI / rays + (state == SolarCreeperBlackHolePhase.ID ? (animationTicks / fullDuration) * Mth.PI * 0.2f - Mth.TWO_PI / 24 : (animationTicks / fullDuration) * Mth.PI * 1.5f);
 
 				float x1 = Mth.sin(angle) * entity.getBbHeight() * 3;
 				float y1 = Mth.cos(angle) * entity.getBbHeight() * 3;
 
 				vertexConsumer.vertex(poseMat, x1, y1, 0f)
-					.color(r1, g1, b1, a1)
+					.color(edgeColor)
 					.uv(0f, 1f)
 					.overlayCoords(OverlayTexture.NO_OVERLAY)
 					.uv2(LightTexture.FULL_BRIGHT)
@@ -157,7 +176,7 @@ public class SolarCreeperRenderer<T extends SolarCreeper> extends MobRenderer<T,
 				float y2 = Mth.cos(largerAngle) * entity.getBbHeight() * 3;
 
 				vertexConsumer.vertex(poseMat, x2, y2, 0f)
-					.color(r1, g1, b1, a1)
+					.color(edgeColor)
 					.uv(1f, 1f)
 					.overlayCoords(OverlayTexture.NO_OVERLAY)
 					.uv2(LightTexture.FULL_BRIGHT)
@@ -178,46 +197,58 @@ public class SolarCreeperRenderer<T extends SolarCreeper> extends MobRenderer<T,
 			poseStack.pushPose();
 			poseStack.translate(sunAbovePos.x - pos.x, sunAbovePos.y - pos.y, sunAbovePos.z - pos.z);
 			PoseStack.Pose pose = poseStack.last();
+
+			int laserColor = FastColor.ARGB32.color(255, 255, 213, 74);
+
 			for (int i = 0; i < 6; i++) {
-				float length = entity.getRenderSolarRayLength(i, partialTicks);
-				Vec3 diff = ESMathUtil.rotateAroundAxis(n, i * 60 + angle, length);
-				Vec3 bodyEndDiff = diff.normalize().scale(Math.max(diff.length() - 0.3f, 0));
-				float jitterWidth = 0.8f;
-				jitterWidth = jitterWidth * 0.2f * (float) Math.sin((entity.tickCount + partialTicks) * 2.1f) + jitterWidth * 0.8f;
-				Vec3 jitterOffset = diff.cross(sight).normalize().scale(jitterWidth / 2);
-				float staticWidth = 0.8f;
-				Vec3 staticOffset = diff.cross(sight).normalize().scale(staticWidth / 2);
-				VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(LASER_JITTER_TEXTURE));
+				if (entity.getRenderSolarRayWidth(i, partialTicks) > 0) {
+					float length = entity.getRenderSolarRayLength(i, partialTicks);
+					Vec3 diff = ESMathUtil.rotateAroundAxis(n, i * 60 + angle, length);
+					Vec3 bodyEndDiff = diff.normalize().scale(Math.max(diff.length() - 0.3f, 0));
+					float jitterWidth = 0.8f;
+					jitterWidth = jitterWidth * 0.2f * (float) Math.sin((entity.tickCount + partialTicks) * 2.1f) + jitterWidth * 0.8f;
+					jitterWidth *= entity.getRenderSolarRayWidth(i, partialTicks);
+					Vec3 jitterOffset = diff.cross(sight).normalize().scale(jitterWidth / 2);
+					float staticWidth = 0.8f;
+					staticWidth = staticWidth * 0.1f * (float) Math.sin(entity.tickCount + partialTicks) + staticWidth * 0.9f;
+					staticWidth *= entity.getRenderSolarRayWidth(i, partialTicks);
+					Vec3 staticOffset = diff.cross(sight).normalize().scale(staticWidth / 2);
+					VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(LASER_JITTER_TEXTURE));
 
-				vertex(consumer, pose, jitterOffset.toVector3f(), 0, 0);
-				vertex(consumer, pose, jitterOffset.scale(-1).toVector3f(), 0, 1);
-				vertex(consumer, pose, bodyEndDiff.add(jitterOffset.scale(-1)).toVector3f(), 0, 1);
-				vertex(consumer, pose, bodyEndDiff.add(jitterOffset).toVector3f(), 0, 0);
+					vertex(consumer, pose, jitterOffset.toVector3f(), 0, 0, laserColor);
+					vertex(consumer, pose, jitterOffset.scale(-1).toVector3f(), 0, 1, laserColor);
+					vertex(consumer, pose, bodyEndDiff.add(jitterOffset.scale(-1)).toVector3f(), 0, 1);
+					vertex(consumer, pose, bodyEndDiff.add(jitterOffset).toVector3f(), 0, 0);
 
-				vertex(consumer, pose, bodyEndDiff.add(jitterOffset).toVector3f(), 0, 0);
-				vertex(consumer, pose, bodyEndDiff.add(jitterOffset.scale(-1)).toVector3f(), 0, 1);
-				vertex(consumer, pose, diff.add(jitterOffset.scale(-1)).toVector3f(), 1, 1);
-				vertex(consumer, pose, diff.add(jitterOffset).toVector3f(), 1, 0);
+					vertex(consumer, pose, bodyEndDiff.add(jitterOffset).toVector3f(), 0, 0);
+					vertex(consumer, pose, bodyEndDiff.add(jitterOffset.scale(-1)).toVector3f(), 0, 1);
+					vertex(consumer, pose, diff.add(jitterOffset.scale(-1)).toVector3f(), 1, 1);
+					vertex(consumer, pose, diff.add(jitterOffset).toVector3f(), 1, 0);
 
-				consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(LASER_STATIC_TEXTURE));
+					consumer = buffer.getBuffer(RenderType.entityCutoutNoCull(LASER_STATIC_TEXTURE));
 
-				vertex(consumer, pose, staticOffset.add(zOffset).toVector3f(), 0, 0);
-				vertex(consumer, pose, staticOffset.scale(-1).add(zOffset).toVector3f(), 0, 1);
-				vertex(consumer, pose, bodyEndDiff.add(staticOffset.scale(-1)).add(zOffset).toVector3f(), 0, 1);
-				vertex(consumer, pose, bodyEndDiff.add(staticOffset).add(zOffset).toVector3f(), 0, 0);
+					vertex(consumer, pose, staticOffset.add(zOffset).toVector3f(), 0, 0, laserColor);
+					vertex(consumer, pose, staticOffset.scale(-1).add(zOffset).toVector3f(), 0, 1, laserColor);
+					vertex(consumer, pose, bodyEndDiff.add(staticOffset.scale(-1)).add(zOffset).toVector3f(), 0, 1);
+					vertex(consumer, pose, bodyEndDiff.add(staticOffset).add(zOffset).toVector3f(), 0, 0);
 
-				vertex(consumer, pose, bodyEndDiff.add(staticOffset).add(zOffset).toVector3f(), 0, 0);
-				vertex(consumer, pose, bodyEndDiff.add(staticOffset.scale(-1)).add(zOffset).toVector3f(), 0, 1);
-				vertex(consumer, pose, diff.add(staticOffset.scale(-1)).add(zOffset).toVector3f(), 1, 1);
-				vertex(consumer, pose, diff.add(staticOffset).add(zOffset).toVector3f(), 1, 0);
+					vertex(consumer, pose, bodyEndDiff.add(staticOffset).add(zOffset).toVector3f(), 0, 0);
+					vertex(consumer, pose, bodyEndDiff.add(staticOffset.scale(-1)).add(zOffset).toVector3f(), 0, 1);
+					vertex(consumer, pose, diff.add(staticOffset.scale(-1)).add(zOffset).toVector3f(), 1, 1);
+					vertex(consumer, pose, diff.add(staticOffset).add(zOffset).toVector3f(), 1, 0);
+				}
 			}
 			poseStack.popPose();
 		}
 	}
 
 	private static void vertex(VertexConsumer consumer, PoseStack.Pose pose, Vector3f pos, float u, float v) {
+		vertex(consumer, pose, pos, u, v, -1);
+	}
+
+	private static void vertex(VertexConsumer consumer, PoseStack.Pose pose, Vector3f pos, float u, float v, int color) {
 		consumer.vertex(pose.pose(), pos.x(), pos.y(), pos.z())
-			.color(-1)
+			.color(color)
 			.uv(u, v)
 			.overlayCoords(OverlayTexture.NO_OVERLAY)
 			.uv2(LightTexture.FULL_BRIGHT)
