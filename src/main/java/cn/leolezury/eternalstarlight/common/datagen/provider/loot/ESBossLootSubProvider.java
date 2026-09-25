@@ -5,18 +5,22 @@ import cn.leolezury.eternalstarlight.common.EternalStarlight;
 import cn.leolezury.eternalstarlight.common.data.ESLootTables;
 import cn.leolezury.eternalstarlight.common.data.ESPaintingVariants;
 import cn.leolezury.eternalstarlight.common.registry.ESItems;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.PlayerPredicate;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -47,7 +51,7 @@ public class ESBossLootSubProvider implements LootTableSubProvider {
 		consumer.accept(ESLootTables.BOSS_THE_GATEKEEPER,
 			LootTable.lootTable()
 				.withPool(LootPool.lootPool()
-					.add(LootItem.lootTableItem(ESItems.BOOK.get())))
+					.add(LootItem.lootTableItem(ESItems.BOOK.get())).when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.KILLER_PLAYER, new EntityPredicate.Builder().subPredicate(PlayerPredicate.Builder.player().checkAdvancementDone(EternalStarlight.id("challenge_gatekeeper"), false).build()))))
 				.withPool(LootPool.lootPool()
 					.add(LootItem.lootTableItem(ESItems.ORB_OF_PROPHECY.get())))
 				.withPool(LootPool.lootPool()

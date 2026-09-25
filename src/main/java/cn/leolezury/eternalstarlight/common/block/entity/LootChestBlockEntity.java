@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -89,8 +90,8 @@ public class LootChestBlockEntity extends BlockEntity {
 			ServerLevel serverLevel = player.serverLevel();
 			MinecraftServer server = serverLevel.getServer();
 			LootTable table = server.getLootData().getLootTable(this.lootTable);
-			LootParams.Builder paramBuilder = new LootParams.Builder(serverLevel);
-			LootParams params = paramBuilder.create(LootContextParamSets.EMPTY);
+			LootParams.Builder paramBuilder = new LootParams.Builder(serverLevel).withParameter(LootContextParams.THIS_ENTITY, player).withParameter(LootContextParams.ORIGIN, player.position()).withParameter(LootContextParams.DAMAGE_SOURCE, this.level.damageSources().generic());
+			LootParams params = paramBuilder.create(LootContextParamSets.ENTITY);
 			itemsToEject.addAll(table.getRandomItems(params));
 		}
 		setChanged();
