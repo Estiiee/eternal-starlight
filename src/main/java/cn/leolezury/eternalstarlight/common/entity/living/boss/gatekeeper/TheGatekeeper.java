@@ -126,6 +126,11 @@ public class TheGatekeeper extends ESBoss implements Npc, Merchant {
 		new GatekeeperEatFailPhase()
 	));
 
+	@Override
+	public BehaviorManager<TheGatekeeper> getBehaviorManager() {
+		return behaviorManager;
+	}
+
 	public AnimationState sitAnimationState = new AnimationState();
 	public AnimationState standAnimationState = new AnimationState();
 	public AnimationState talkAnimationState = new AnimationState();

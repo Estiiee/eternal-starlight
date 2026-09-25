@@ -71,26 +71,26 @@ public class RippleParticle extends TextureSheetParticle {
 			Vector3f inner2 = new Vector3f(cos2 * innerRadius, sin2 * innerRadius, 0).rotate(quaternion).add(cx, cy, cz);
 
 			consumer.vertex(inner1.x(), inner1.y(), inner1.z())
-				.color(red, green, blue, 1.0f)
 				.uv(u0, v0)
+				.color(red, green, blue, 1.0f)
 				.uv2(packedLight)
 				.endVertex();
 
 			consumer.vertex(outer1.x(), outer1.y(), outer1.z())
-				.color(red, green, blue, 1.0f)
 				.uv(u0, v1)
+				.color(red, green, blue, 1.0f)
 				.uv2(packedLight)
 				.endVertex();
 
 			consumer.vertex(outer2.x(), outer2.y(), outer2.z())
-				.color(red, green, blue, 1.0f)
 				.uv(u1, v1)
+				.color(red, green, blue, 1.0f)
 				.uv2(packedLight)
 				.endVertex();
 
 			consumer.vertex(inner2.x(), inner2.y(), inner2.z())
-				.color(red, green, blue, 1.0f)
 				.uv(u1, v0)
+				.color(red, green, blue, 1.0f)
 				.uv2(packedLight)
 				.endVertex();
 		}
