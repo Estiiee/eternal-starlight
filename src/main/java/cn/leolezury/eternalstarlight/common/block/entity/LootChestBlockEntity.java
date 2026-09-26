@@ -1,12 +1,18 @@
 package cn.leolezury.eternalstarlight.common.block.entity;
 
+import cn.leolezury.eternalstarlight.common.EternalStarlight;
+import cn.leolezury.eternalstarlight.common.item.loot.ESLootContextParamSets;
+import cn.leolezury.eternalstarlight.common.item.loot.ESLootContextParams;
 import cn.leolezury.eternalstarlight.common.network.ParticlePacket;
 import cn.leolezury.eternalstarlight.common.particle.ExplosionShockParticleOptions;
 import cn.leolezury.eternalstarlight.common.platform.ESPlatform;
 import cn.leolezury.eternalstarlight.common.registry.ESBlockEntities;
 import cn.leolezury.eternalstarlight.common.registry.ESDataAttachments;
+import cn.leolezury.eternalstarlight.common.util.ESCodecUtil;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.*;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -28,16 +34,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class LootChestBlockEntity extends BlockEntity {
 	private static final String TAG_LOOT_TABLE = "loot_table";
@@ -52,10 +54,12 @@ public class LootChestBlockEntity extends BlockEntity {
 	private static final String TAG_FLASH_COLOR = "flash_color";
 	private static final String TAG_RARE_FLASH_COLOR = "rare_flash_color";
 
+	private static final Codec<Map<UUID, Map<ResourceLocation, Integer>>> REWARD_TARGETS_CODEC = ESCodecUtil.createCodecForMap(UUIDUtil.CODEC, ESCodecUtil.createCodecForMap(ResourceLocation.CODEC, Codec.INT));
+
 	private ResourceLocation lootTable;
 	private final List<ItemStack> itemsToEject = new ArrayList<>();
 	private boolean quickEjection = false;
-	private final List<UUID> rewardTargets = new ArrayList<>();
+	private final Map<UUID, Map<ResourceLocation, Integer>> rewardTargets = new HashMap<>();
 	private UUID currentRewardTarget;
 	private int ejectionTicks, cooldown;
 	private int color = -1, outlineColor = -1, flashColor = -1, rareFlashColor = -1;
@@ -72,11 +76,11 @@ public class LootChestBlockEntity extends BlockEntity {
 	}
 
 	public List<UUID> getRewardTargets() {
-		return Collections.unmodifiableList(rewardTargets);
+		return rewardTargets.keySet().stream().toList();
 	}
 
-	public void addRewardTarget(UUID rewardTarget) {
-		this.rewardTargets.add(rewardTarget);
+	public void addRewardTarget(UUID rewardTarget, Map<ResourceLocation, Integer> challengeCounts) {
+		this.rewardTargets.put(rewardTarget, new HashMap<>(challengeCounts));
 		setChanged();
 	}
 
@@ -84,7 +88,6 @@ public class LootChestBlockEntity extends BlockEntity {
 		player.level().blockEvent(pos, block, 1, 0);
 		this.quickEjection = quickEjection;
 		this.currentRewardTarget = player.getUUID();
-		this.rewardTargets.remove(player.getUUID());
 		if (this.lootTable != null) {
 			itemsToEject.clear();
 			ServerLevel serverLevel = player.serverLevel();
@@ -92,10 +95,12 @@ public class LootChestBlockEntity extends BlockEntity {
 			LootTable table = server.getLootData().getLootTable(this.lootTable);
 			LootParams.Builder paramBuilder = new LootParams.Builder(serverLevel)
 				.withParameter(LootContextParams.THIS_ENTITY, player)
-				.withParameter(LootContextParams.ORIGIN, player.position());
-			LootParams params = paramBuilder.create(LootContextParamSets.CHEST);
+				.withParameter(LootContextParams.ORIGIN, player.position())
+				.withParameter(ESLootContextParams.BOSS_CHALLENGE_COUNTS, this.rewardTargets.getOrDefault(player.getUUID(), Collections.emptyMap()));
+			LootParams params = paramBuilder.create(ESLootContextParamSets.BOSS);
 			itemsToEject.addAll(table.getRandomItems(params));
 		}
+		this.rewardTargets.remove(player.getUUID());
 		setChanged();
 	}
 
@@ -287,12 +292,11 @@ public class LootChestBlockEntity extends BlockEntity {
 
 		this.quickEjection = tag.getBoolean(TAG_QUICK_EJECTION);
 
-		if (tag.contains(TAG_REWARD_TARGETS, Tag.TAG_LIST)) {
-			ListTag list = tag.getList(TAG_REWARD_TARGETS, Tag.TAG_INT_ARRAY);
+		if (tag.contains(TAG_REWARD_TARGETS)) {
 			this.rewardTargets.clear();
-			for (Tag t : list) {
-				this.rewardTargets.add(NbtUtils.loadUUID(t));
-			}
+			REWARD_TARGETS_CODEC.parse(NbtOps.INSTANCE, tag.get(TAG_REWARD_TARGETS))
+				.resultOrPartial(msg -> EternalStarlight.LOGGER.error("Failed to parse Loot Chest reward targets: '{}'", msg))
+				.ifPresent(this.rewardTargets::putAll);
 		}
 
 		if (tag.contains(TAG_CURRENT_REWARD_TARGET)) {
@@ -324,11 +328,7 @@ public class LootChestBlockEntity extends BlockEntity {
 
 		tag.putBoolean(TAG_QUICK_EJECTION, this.quickEjection);
 
-		ListTag uuidList = new ListTag();
-		for (UUID id : this.rewardTargets) {
-			uuidList.add(NbtUtils.createUUID(id));
-		}
-		tag.put(TAG_REWARD_TARGETS, uuidList);
+		tag.put(TAG_REWARD_TARGETS, REWARD_TARGETS_CODEC.encodeStart(NbtOps.INSTANCE, this.rewardTargets).getOrThrow(false, EternalStarlight.LOGGER::error));
 
 		if (this.currentRewardTarget != null) {
 			tag.putUUID(TAG_CURRENT_REWARD_TARGET, this.currentRewardTarget);
@@ -341,5 +341,4 @@ public class LootChestBlockEntity extends BlockEntity {
 		tag.putInt(TAG_FLASH_COLOR, this.flashColor);
 		tag.putInt(TAG_RARE_FLASH_COLOR, this.rareFlashColor);
 	}
-
 }

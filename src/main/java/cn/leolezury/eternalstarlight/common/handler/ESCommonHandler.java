@@ -1,7 +1,6 @@
 package cn.leolezury.eternalstarlight.common.handler;
 
 import cn.leolezury.eternalstarlight.common.EternalStarlight;
-import cn.leolezury.eternalstarlight.common.block.NocturnalMilletTopBlock;
 import cn.leolezury.eternalstarlight.common.block.fluid.EtherFluid;
 import cn.leolezury.eternalstarlight.common.config.ESConfig;
 import cn.leolezury.eternalstarlight.common.crest.Crest;
@@ -332,7 +331,7 @@ public class ESCommonHandler {
 		Entity sourceEntity = source.getEntity();
 		if (sourceEntity != null) {
 			if (sourceEntity.getType() == ESEntities.THE_GATEKEEPER.get() && entity instanceof ServerPlayer serverPlayer && TheGatekeeper.isPlayerPermitted(serverPlayer)) {
-				modified *= (1 + Mth.clamp(ESDataAttachments.BOSS_CHALLENGE_COUNT.getData(entity).getOrDefault(EntityType.getKey(ESEntities.THE_GATEKEEPER.get()), 0), 0, 40) * 0.05f);
+				modified *= (1 + Mth.clamp(ESDataAttachments.BOSS_CHALLENGE_COUNTS.getData(entity).getOrDefault(EntityType.getKey(ESEntities.THE_GATEKEEPER.get()), 0), 0, 40) * 0.05f);
 			}
 			if (sourceEntity.getType() == ESEntities.STARLIGHT_GOLEM.get()) {
 				modified *= ESConfig.starlightGolem.attackDamageScale.get().floatValue();

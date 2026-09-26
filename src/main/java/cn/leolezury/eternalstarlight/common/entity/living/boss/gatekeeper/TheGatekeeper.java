@@ -470,7 +470,7 @@ public class TheGatekeeper extends ESBoss implements Npc, Merchant {
 			Advancement killDragon = serverPlayer.getServer().getAdvancements().getAdvancement(new ResourceLocation("minecraft:end/kill_dragon"));
 			if (killDragon != null && serverPlayer.getAdvancements().getOrStartProgress(killDragon).isDone() && !isPlayerPermitted(serverPlayer)) {
 				permitPlayer(serverPlayer);
-				ItemStack lootBag = getBossLootBag();
+				ItemStack lootBag = getBossLootBag(ESDataAttachments.BOSS_CHALLENGE_COUNTS.getData(player));
 				ItemEntity item = player.spawnAtLocation(lootBag);
 				if (item != null) {
 					ESDataAttachments.IMPORTANT_ITEM.setData(item, true);
@@ -769,7 +769,7 @@ public class TheGatekeeper extends ESBoss implements Npc, Merchant {
 
 	public ItemStack getGatekeeperHammer() {
 		LivingEntity target = getTarget();
-		if (target instanceof ServerPlayer serverPlayer && isPlayerPermitted(serverPlayer) && ESDataAttachments.BOSS_CHALLENGE_COUNT.getData(target).getOrDefault(EntityType.getKey(getType()), 0) > 0) {
+		if (target instanceof ServerPlayer serverPlayer && isPlayerPermitted(serverPlayer) && ESDataAttachments.BOSS_CHALLENGE_COUNTS.getData(target).getOrDefault(EntityType.getKey(getType()), 0) > 0) {
 			ItemStack weapon = Items.NETHERITE_AXE.getDefaultInstance();
 			ItemStack source = ESItems.GLISTERING_MORNING_STAR.get().getDefaultInstance();
 			Multimap<Attribute, AttributeModifier> mods = source.getAttributeModifiers(EquipmentSlot.MAINHAND);

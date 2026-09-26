@@ -1,5 +1,7 @@
 package cn.leolezury.eternalstarlight.common.item.misc;
 
+import cn.leolezury.eternalstarlight.common.item.loot.ESLootContextParamSets;
+import cn.leolezury.eternalstarlight.common.item.loot.ESLootContextParams;
 import cn.leolezury.eternalstarlight.common.registry.ESDataAttachments;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +18,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LootBagItem extends Item {
 	public LootBagItem(Properties properties) {
@@ -34,6 +38,27 @@ public class LootBagItem extends Item {
 		stack.getOrCreateTag().putString("LootTable", table.toString());
 	}
 
+	public static void setBossChallengeCounts(ItemStack stack, Map<ResourceLocation, Integer> challengeCounts) {
+		CompoundTag countsTag = new CompoundTag();
+		for (Map.Entry<ResourceLocation, Integer> entry : challengeCounts.entrySet()) {
+			countsTag.putInt(entry.getKey().toString(), entry.getValue());
+		}
+		stack.getOrCreateTag().put("BossChallengeCounts", countsTag);
+	}
+
+	public static Map<ResourceLocation, Integer> getBossChallengeCounts(ItemStack stack) {
+		Map<ResourceLocation, Integer> result = new HashMap<>();
+		if (!stack.hasTag()) return result;
+		CompoundTag tag = stack.getTag();
+		if (!tag.contains("BossChallengeCounts")) return result;
+
+		CompoundTag countsTag = tag.getCompound("BossChallengeCounts");
+		for (String key : countsTag.getAllKeys()) {
+			result.put(new ResourceLocation(key), countsTag.getInt(key));
+		}
+		return result;
+	}
+
 	private boolean dropLoot(Level level, Player player, ItemStack stack) {
 		ResourceLocation tableId = LootBagItem.getLootTable(stack);
 		if (tableId == null) return false;
@@ -41,10 +66,11 @@ public class LootBagItem extends Item {
 		if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
 			LootTable table = serverLevel.getServer().getLootData().getLootTable(tableId);
 
-			LootParams params = new LootParams.Builder(serverLevel)
+			LootParams.Builder paramBuilder = new LootParams.Builder(serverLevel)
 				.withParameter(LootContextParams.THIS_ENTITY, player)
 				.withParameter(LootContextParams.ORIGIN, player.position())
-				.create(LootContextParamSets.EMPTY);
+				.withParameter(ESLootContextParams.BOSS_CHALLENGE_COUNTS, LootBagItem.getBossChallengeCounts(stack));
+			LootParams params = paramBuilder.create(ESLootContextParamSets.BOSS);
 
 			for (ItemStack loot : table.getRandomItems(params)) {
 				ItemEntity itemEntity = new ItemEntity(

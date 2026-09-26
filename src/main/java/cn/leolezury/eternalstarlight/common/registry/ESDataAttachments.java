@@ -79,8 +79,8 @@ public class ESDataAttachments {
 	public static final EntityDataAttachment<Integer> HUSK_OWNER_ID =
 		regInt("husk_owner_id", -1, false);
 
-	public static final EntityDataAttachment<Map<ResourceLocation, Integer>> BOSS_CHALLENGE_COUNT =
-		regSimple("boss_challenge_count", Map::of, true,
+	public static final EntityDataAttachment<Map<ResourceLocation, Integer>> BOSS_CHALLENGE_COUNTS =
+		regSimple("boss_challenge_counts", Map::of, true,
 			(buf, map) -> {
 				buf.writeVarInt(map.size());
 				for (Map.Entry<ResourceLocation, Integer> entry : map.entrySet()) {

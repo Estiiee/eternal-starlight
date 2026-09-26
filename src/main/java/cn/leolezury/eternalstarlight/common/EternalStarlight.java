@@ -7,6 +7,7 @@ import cn.leolezury.eternalstarlight.common.config.ESConfig;
 import cn.leolezury.eternalstarlight.common.data.ESEnchantments;
 import cn.leolezury.eternalstarlight.common.data.ESRegistries;
 import cn.leolezury.eternalstarlight.common.handler.ESCommonSetupHandler;
+import cn.leolezury.eternalstarlight.common.item.loot.ESLootContextParamSets;
 import cn.leolezury.eternalstarlight.common.network.ESPackets;
 import cn.leolezury.eternalstarlight.common.network.handler.ESForgeNetworkHandler;
 import cn.leolezury.eternalstarlight.common.platform.ESForgePlatform;
@@ -15,6 +16,7 @@ import cn.leolezury.eternalstarlight.common.util.ESMiscUtil;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -72,9 +74,13 @@ public class EternalStarlight {
 		ESBoarwarfProfessions.loadClass();
 		ESDataAttachments.loadClass();
 		ESRegistries.loadClass();
+		ESLootItemConditions.loadClass();
 		ESFlammabilityRegistry.registerDefaults();
 		ESEnchantments.loadClass();
 		ESForgeNetworkHandler.register();
+		synchronized (LootContextParamSets.REGISTRY) {
+			LootContextParamSets.REGISTRY.put(EternalStarlight.id("boss"), ESLootContextParamSets.BOSS);
+		}
 
 		modBus.addListener(this::onCommonSetup);
 		modBus.addListener(this::onRegister);
