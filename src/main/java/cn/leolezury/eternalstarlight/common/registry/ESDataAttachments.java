@@ -14,10 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -82,8 +79,25 @@ public class ESDataAttachments {
 	public static final EntityDataAttachment<Integer> HUSK_OWNER_ID =
 		regInt("husk_owner_id", -1, false);
 
-	public static final EntityDataAttachment<Integer> GATEKEEPER_CHALLENGE_COUNT =
-		regInt("gatekeeper_challenge_count", 0, true);
+	public static final EntityDataAttachment<Map<ResourceLocation, Integer>> BOSS_CHALLENGE_COUNT =
+		regSimple("boss_challenge_count", Map::of, true,
+			(buf, map) -> {
+				buf.writeVarInt(map.size());
+				for (Map.Entry<ResourceLocation, Integer> entry : map.entrySet()) {
+					buf.writeResourceLocation(entry.getKey());
+					buf.writeVarInt(entry.getValue());
+				}
+			},
+			buf -> {
+				int size = buf.readVarInt();
+				Map<ResourceLocation, Integer> map = new HashMap<>();
+				for (int i = 0; i < size; i++) {
+					ResourceLocation key = buf.readResourceLocation();
+					int value = buf.readVarInt();
+					map.put(key, value);
+				}
+				return Map.copyOf(map);
+			});
 
 	public static final EntityDataAttachment<Integer> STRANGHOUL_HIRING_COOLDOWN =
 		regInt("stranghoul_hiring_cooldown", 0, true);

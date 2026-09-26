@@ -43,10 +43,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class ESBoss extends Monster implements MultiBehaviorUser {
 	private static final String TAG_INITIAL_POS = "initial_pos";
@@ -180,6 +177,9 @@ public abstract class ESBoss extends Monster implements MultiBehaviorUser {
 
 	@Override
 	public void die(DamageSource source) {
+		if (source.getEntity() instanceof ServerPlayer player && !fightParticipants.contains(player.getUUID())) {
+			fightParticipants.add(player.getUUID());
+		}
 		if (!level().isClientSide) {
 			for (UUID uuid : fightParticipants) {
 				Player player = level().getPlayerByUUID(uuid);
@@ -243,24 +243,42 @@ public abstract class ESBoss extends Monster implements MultiBehaviorUser {
 	@Override
 	public void remove(RemovalReason reason) {
 		if (reason == RemovalReason.KILLED) {
-			trySpawnLoot();
-			if (ESConfig.enableBossRespawn.get()) {
-				BlockState spawnerState = getBossSpawner();
-				if (!spawnerState.isAir() && initialPos.dimension() == level().dimension()) {
-					BlockPos spawnerPos = BlockPos.containing(initialPos.pos());
-					if (canBossSpawnerReplace(spawnerPos, level().getBlockState(spawnerPos))) {
-						level().setBlockAndUpdate(spawnerPos, spawnerState);
-						if (level().getBlockEntity(spawnerPos) instanceof BossSpawnerBlockEntity<?> blockEntity) {
-							blockEntity.setSpawnCooldown(ESConfig.bossRespawnCooldown.get());
-						}
-					}
-				}
-			}
+			bossDefeat();
 		}
 		super.remove(reason);
 	}
 
-	protected BlockState getBossSpawner() {
+	protected void increaseBossChallengeCount(Player player) {
+		Map<ResourceLocation, Integer> challengeCount = ESDataAttachments.BOSS_CHALLENGE_COUNT.getData(player);
+		Map<ResourceLocation, Integer> newChallengeCount = new HashMap<>(challengeCount);
+		newChallengeCount.compute(EntityType.getKey(getType()), (k, v) -> v == null ? 1 : v + 1);
+		ESDataAttachments.BOSS_CHALLENGE_COUNT.setData(player, newChallengeCount);
+	}
+
+	protected void bossDefeat() {
+		trySpawnLoot();
+		for (UUID uuid : fightParticipants) {
+			Player player = level().getPlayerByUUID(uuid);
+			if (player != null && player.isAlive() && player.level().dimension() == level().dimension()) {
+				increaseBossChallengeCount(player);
+			}
+		}
+		if (ESConfig.enableBossRespawn.get()) {
+			BlockState spawnerState = getBossSpawnerForRespawn();
+			if (!spawnerState.isAir() && initialPos.dimension() == level().dimension()) {
+				BlockPos spawnerPos = BlockPos.containing(initialPos.pos());
+				if (canBossSpawnerReplace(spawnerPos, level().getBlockState(spawnerPos))) {
+					level().setBlockAndUpdate(spawnerPos, spawnerState);
+					if (level().getBlockEntity(spawnerPos) instanceof BossSpawnerBlockEntity<?> blockEntity) {
+						blockEntity.setSpawnCooldown(ESConfig.bossRespawnCooldown.get());
+					}
+				}
+			}
+		}
+		fightParticipants.clear();
+	}
+
+	protected BlockState getBossSpawnerForRespawn() {
 		return Blocks.AIR.defaultBlockState();
 	}
 

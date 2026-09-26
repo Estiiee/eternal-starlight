@@ -90,8 +90,10 @@ public class LootChestBlockEntity extends BlockEntity {
 			ServerLevel serverLevel = player.serverLevel();
 			MinecraftServer server = serverLevel.getServer();
 			LootTable table = server.getLootData().getLootTable(this.lootTable);
-			LootParams.Builder paramBuilder = new LootParams.Builder(serverLevel).withParameter(LootContextParams.THIS_ENTITY, player).withParameter(LootContextParams.ORIGIN, player.position()).withParameter(LootContextParams.DAMAGE_SOURCE, this.level.damageSources().generic());
-			LootParams params = paramBuilder.create(LootContextParamSets.ENTITY);
+			LootParams.Builder paramBuilder = new LootParams.Builder(serverLevel)
+				.withParameter(LootContextParams.THIS_ENTITY, player)
+				.withParameter(LootContextParams.ORIGIN, player.position());
+			LootParams params = paramBuilder.create(LootContextParamSets.CHEST);
 			itemsToEject.addAll(table.getRandomItems(params));
 		}
 		setChanged();

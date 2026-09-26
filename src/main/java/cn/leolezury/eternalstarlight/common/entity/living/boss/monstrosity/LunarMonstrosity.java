@@ -345,7 +345,7 @@ public class LunarMonstrosity extends ESBoss implements RayAttackUser {
 	}
 
 	@Override
-	protected BlockState getBossSpawner() {
+	protected BlockState getBossSpawnerForRespawn() {
 		return ESBlocks.LUNAR_MONSTROSITY_SPAWNER.get().defaultBlockState();
 	}
 

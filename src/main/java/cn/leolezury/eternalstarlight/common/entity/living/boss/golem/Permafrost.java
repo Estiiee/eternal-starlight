@@ -310,7 +310,7 @@ public class Permafrost extends ESBoss {
 	}
 
 	@Override
-	protected BlockState getBossSpawner() {
+	protected BlockState getBossSpawnerForRespawn() {
 		return ESBlocks.PERMAFROST_SPAWNER.get().defaultBlockState();
 	}
 
