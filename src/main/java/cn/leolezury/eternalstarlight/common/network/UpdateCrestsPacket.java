@@ -41,10 +41,16 @@ public class UpdateCrestsPacket implements ESPacket {
 			List<Crest.Instance> crestList = crests;
 			List<Crest.Instance> owned = ESCrestUtil.getOwnedCrests(player);
 
-			// Validate: cannot set crests the player doesn't own
-			boolean invalid = crestList.stream().anyMatch(
-				c -> owned.stream().noneMatch(o -> o.crest().value() == c.crest().value())
-			);
+			// Validate: level must be in range, and player must own that crest at >= the requested level
+			boolean invalid = crestList.stream().anyMatch(c -> {
+				int level = c.level();
+				if (level < 1 || level > c.crest().value().maxLevel()) {
+					return true;
+				}
+				return owned.stream()
+					.filter(o -> o.crest().value() == c.crest().value())
+					.noneMatch(o -> level <= o.level());
+			});
 
 			if (!invalid) {
 				ESCrestUtil.setCrests(player, crestList);

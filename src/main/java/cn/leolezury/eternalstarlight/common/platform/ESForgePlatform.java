@@ -263,35 +263,6 @@ public class ESForgePlatform implements ESPlatform {
 	}
 
 	@Override
-	public CreativeModeTab getESTab() {
-		return CreativeModeTab.builder()
-			.icon(() -> new ItemStack(ESItems.STARLIGHT_FLOWER.get()))
-			.title(Component.translatable("itemGroup.eternal_starlight"))
-			.displayItems((displayParameters, output) -> {
-				for (ResourceKey<Item> entry : ESItems.REGISTERED_ITEMS) {
-					Item item = BuiltInRegistries.ITEM.get(entry);
-					if (item != null) {
-						output.accept(item);
-
-						if (item == ESItems.STARLIT_PAINTING.get()) {
-							displayParameters.holders()
-								.lookup(Registries.PAINTING_VARIANT)
-								.ifPresent(registryLookup ->
-									ESCreativeModeTabs.generatePresetPaintings(
-										output,
-										displayParameters.holders(),
-										registryLookup,
-										holder -> holder.is(ESTags.PaintingVariants.PLACEABLE)
-									)
-								);
-						}
-					}
-				}
-			})
-			.build();
-	}
-
-	@Override
 	public <T> EntityDataAttachment<T> createAttachment(ResourceLocation id, Supplier<T> defaultValue, boolean copyOnDeath, BiPredicate<T, T> shouldSync, BiConsumer<FriendlyByteBuf, T> writer, Function<FriendlyByteBuf, T> reader) {
 		return new ForgeEntityDataAttachment<>(id, defaultValue, copyOnDeath, shouldSync, writer, reader);
 	}

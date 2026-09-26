@@ -1,10 +1,10 @@
-// 1.20.1	2026-09-16T23:33:27.3164462	Tags for minecraft:worldgen/biome mod id eternal_starlight
+// 1.20.1	2026-09-26T21:34:20.5881626	Tags for minecraft:worldgen/biome mod id eternal_starlight
 e2819a083632be5389d29621bac53ca6726d23a5 data/eternal_starlight/tags/worldgen/biome/has_cursed_garden.json
 46b4f84fcf4517d1bcefe661c975cf52e99df079 data/eternal_starlight/tags/worldgen/biome/has_golem_forge.json
-f982ccc2054f9895675c9d2d5a263bea9506417e data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_cold.json
-4193d74391b3253b34cd555ef95d70d824d3f120 data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_common.json
-42d7f45693b54847c20b5f5ab083d343e1c0c14d data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_desert.json
-777b34fb376dad6647f6fc402daf23be1809599a data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_forest.json
-7a6207cbf7b61e7823ff557ca7e8e46deca64eab data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_jungle.json
+7c85f87374c3b0a98327d9a13c2dec02c2dafa95 data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_cold.json
+0f9abc451f329a6e5563e6f348c032d5444d090c data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_common.json
+3c042e4fe68859a01b080c3e1e547e9d309c26d8 data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_desert.json
+6b35771c8d400b0921c04386d79e88b834c282ad data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_forest.json
+c3d4e55bd4ed5d178abb10df76626eccdab7c209 data/eternal_starlight/tags/worldgen/biome/has_portal_ruins_jungle.json
 83fa957bccaacd71866525cb690c72ec5772b8b9 data/eternal_starlight/tags/worldgen/biome/has_stranghoul_den.json
 ec94516427a04d64261317f549463c1c1700bb2f data/eternal_starlight/tags/worldgen/biome/permafrost.json

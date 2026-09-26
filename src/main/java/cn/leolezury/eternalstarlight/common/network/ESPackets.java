@@ -56,7 +56,7 @@ public class ESPackets {
 		register(EternalStarlight.id("open_crest_gui"), OpenCrestGuiPacket::read);
 		register(EternalStarlight.id("open_gatekeeper_gui"), OpenGatekeeperGuiPacket::read);
 		register(EternalStarlight.id("close_gatekeeper_gui"), CloseGatekeeperGuiPacket::read);
-		register(EternalStarlight.id("trigger_entity_event"), TriggerEntityEventPacket::read);
+		register(EternalStarlight.id("gatekeeper_talk"), GatekeeperTalkPacket::read);
 		register(EternalStarlight.id("client_mount"), ClientMountPacket::read);
 		register(EternalStarlight.id("client_dismount"), ClientDismountPacket::read);
 		register(EternalStarlight.id("update_camera"), UpdateCameraPacket::read);

@@ -26,7 +26,7 @@ public class ESFoods {
 	public static final Supplier<FoodProperties> ROTTEN_FLESH_JERKY = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(5).saturationMod(0.8F).build());
 	public static final Supplier<FoodProperties> ROOKFISH = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(3).saturationMod(0.1F).build());
 	public static final Supplier<FoodProperties> COOKED_ROOKFISH = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(7).saturationMod(0.3F).build());
-	public static final Supplier<FoodProperties> ROOKFISH_SKEWER = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).build());
+	public static final Supplier<FoodProperties> ROOKFISH_SKEWER = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).fast().build());
 	public static final Supplier<FoodProperties> LUMINOFISH = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build());
 	public static final Supplier<FoodProperties> COOKED_LUMINOFISH = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(6).saturationMod(0.8F).build());
 	public static final Supplier<FoodProperties> LUMINARIS = Suppliers.memoize(() -> new FoodProperties.Builder().nutrition(2).saturationMod(0.1F).build());

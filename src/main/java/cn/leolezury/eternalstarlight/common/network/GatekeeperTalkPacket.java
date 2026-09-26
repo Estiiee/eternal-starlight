@@ -1,43 +1,40 @@
 package cn.leolezury.eternalstarlight.common.network;
 
 import cn.leolezury.eternalstarlight.common.EternalStarlight;
+import cn.leolezury.eternalstarlight.common.entity.living.boss.gatekeeper.TheGatekeeper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-public class TriggerEntityEventPacket implements ESPacket {
+public class GatekeeperTalkPacket implements ESPacket {
 	private final int id;
-	private final byte event;
 
-	public TriggerEntityEventPacket(int id, byte event) {
+	public GatekeeperTalkPacket(int id) {
 		this.id = id;
-		this.event = event;
 	}
 
-	public static TriggerEntityEventPacket read(FriendlyByteBuf buf) {
-		return new TriggerEntityEventPacket(buf.readInt(), buf.readByte());
+	public static GatekeeperTalkPacket read(FriendlyByteBuf buf) {
+		return new GatekeeperTalkPacket(buf.readInt());
 	}
 
 	@Override
 	public void write(FriendlyByteBuf buf) {
 		buf.writeInt(id);
-		buf.writeByte(event);
 	}
 
 	@Override
 	public void handle(Player player) {
 		Entity entity = player.level().getEntity(id);
-		if (entity != null) {
-			player.level().broadcastEntityEvent(entity, event);
+		if (entity != null && entity instanceof TheGatekeeper gatekeeper) {
+			player.level().broadcastEntityEvent(gatekeeper, TheGatekeeper.EVENT_TALK);
 		}
 	}
 
 	@Override
 	public ResourceLocation id() {
-		return EternalStarlight.id("trigger_entity_event");
+		return EternalStarlight.id("gatekeeper_talk");
 	}
 
 	public int entityId() { return id; }
-	public byte eventId() { return event; }
 }

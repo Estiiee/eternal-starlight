@@ -16,6 +16,7 @@ import cn.leolezury.eternalstarlight.common.util.ESMiscUtil;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -104,6 +105,9 @@ public class EternalStarlight {
 
 	private void onCommonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
+			ESCommonSetupHandler.COMPOSTABLES.get().object2FloatEntrySet().forEach(entry ->
+				ComposterBlock.COMPOSTABLES.put(entry.getKey().get(), entry.getFloatValue())
+			);
 		});
 	}
 
