@@ -223,7 +223,7 @@ public class ForgeClientSetupEvents {
 
 	@SubscribeEvent
 	public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
-		/* TODO check if this maybe works instead. for now off
+		/* Not doable as easily as far as I know, and not important enough for me to care
 		for (EntityType<?> type : BuiltInRegistries.ENTITY_TYPE) {
 			if (type.getBaseClass() != null && LivingEntity.class.isAssignableFrom(type.getBaseClass())) {
 				LivingEntityRenderer<?, ?> renderer = event.getRenderer((EntityType<? extends LivingEntity>) type);

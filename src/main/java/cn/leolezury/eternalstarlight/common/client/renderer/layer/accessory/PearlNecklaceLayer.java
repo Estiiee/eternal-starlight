@@ -1,6 +1,8 @@
 package cn.leolezury.eternalstarlight.common.client.renderer.layer.accessory;
 
 import cn.leolezury.eternalstarlight.common.EternalStarlight;
+import cn.leolezury.eternalstarlight.common.registry.ESItems;
+import cn.leolezury.eternalstarlight.common.util.ESAccessoryUtil;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +24,6 @@ public class PearlNecklaceLayer extends ArmorLikeAccessoryLayer<LivingEntity, Hu
 
 	@Override
 	protected boolean shouldRender(LivingEntity entity) {
-		//return ESAccessoryUtil.getActiveAccessoriesOnArmors(entity).contains(ESItems.PEARL_NECKLACE.get());
-		return false;
+		return ESAccessoryUtil.getActiveAccessoriesOnArmors(entity).contains(ESItems.PEARL_NECKLACE.get());
 	}
 }

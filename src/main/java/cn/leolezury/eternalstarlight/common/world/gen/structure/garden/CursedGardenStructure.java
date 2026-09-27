@@ -8,6 +8,7 @@ import cn.leolezury.eternalstarlight.common.registry.ESStructureTypes;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -53,6 +54,7 @@ public class CursedGardenStructure extends Structure {
 							if ((level.isEmptyBlock(pos) || level.getBlockState(pos).is(Blocks.VINE)) && (level.isEmptyBlock(pos.above()) || level.getBlockState(pos.above()).is(Blocks.VINE)) && level.getBlockState(pos.below()).is(ESBlocks.TENACIOUS_NIGHTFALL_GRASS_BLOCK.get())) {
 								if (random.nextInt(150) == 0) {
 									Tangled tangled = new Tangled(ESEntities.TANGLED.get(), level.getLevel());
+									tangled.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
 									tangled.setPos(Vec3.atBottomCenterOf(pos));
 									tangled.setPersistenceRequired();
 									level.addFreshEntity(tangled);

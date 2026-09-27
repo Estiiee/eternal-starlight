@@ -748,6 +748,61 @@
             ]
           ]
         }
+      },
+      {
+        "type": "eternal_starlight:display",
+        "config": {
+          "crafting_recipe_displays": [],
+          "entity_displays": [],
+          "id": "eternal_starlight:pearl_necklace_display",
+          "image_displays": [
+            {
+              "height": 20,
+              "location": "eternal_starlight:textures/gui/screen/book/slot.png",
+              "width": 20,
+              "x": 0,
+              "y": 5
+            }
+          ],
+          "item_displays": [
+            {
+              "item": {
+                "Count": 1,
+                "id": "eternal_starlight:pearl_necklace"
+              },
+              "x": 2,
+              "y": 7
+            }
+          ],
+          "item_tag_displays": [],
+          "text_displays": [
+            {
+              "centered": false,
+              "line_height": 12,
+              "min_distance_to_bottom": 8,
+              "scale": 1.0,
+              "text": [
+                {
+                  "content": "${color: #acfffc}",
+                  "translation": false
+                },
+                {
+                  "content": "book.eternal_starlight.accessories.pearl_necklace",
+                  "translation": true
+                }
+              ],
+              "width": 100,
+              "x": 25,
+              "y": 10
+            }
+          ],
+          "total_height": 30,
+          "unlock_conditions": [
+            [
+              "eternal_starlight:advancement_enter_starlight"
+            ]
+          ]
+        }
       }
     ],
     [

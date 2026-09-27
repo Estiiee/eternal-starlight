@@ -292,7 +292,7 @@ public class ForgeCommonEvents {
 	@Mod.EventBusSubscriber(modid = EternalStarlight.ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class ModEvents {
 		@SubscribeEvent
-		public void onAttributeModification(EntityAttributeModificationEvent event) {
+		public static void onAttributeModification(EntityAttributeModificationEvent event) {
 			event.getTypes().forEach(entityType -> {
 				event.add(entityType, ESAttributes.THROWN_POTION_DISTANCE.get());
 				event.add(entityType, ESAttributes.ETHER_RESISTANCE.get());
@@ -300,7 +300,9 @@ public class ForgeCommonEvents {
 				event.add(entityType, ESAttributes.METEOR_COUNTERATTACK_CHANCE.get());
 				event.add(entityType, ESAttributes.HEAL_MULTIPLIER.get());
 				event.add(entityType, ESAttributes.ENEMY_FOLLOW_RANGE_MULTIPLIER.get());
+				event.add(entityType, ESAttributes.OXYGEN_BONUS.get());
 			});
+			event.add(EntityType.PLAYER, ESAttributes.SUBMERGED_MINING_SPEED.get());
 			event.add(EntityType.PLAYER, ESAttributes.FOG_VISION.get());
 		}
 	}

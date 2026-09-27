@@ -88,7 +88,6 @@ public class ESEntities {
 		"gleech",
 		() -> EntityType.Builder.of(Gleech::new, MobCategory.MONSTER)
 			.sized(0.5F, 0.4F)
-			//.passengerAttachments(0.2375F)
 			.clientTrackingRange(8)
 			.build(EternalStarlight.id("gleech").toString())
 	);
@@ -154,7 +153,6 @@ public class ESEntities {
 		"ent",
 		() -> EntityType.Builder.of(Ent::new, MobCategory.CREATURE)
 			.sized(0.5F, 0.6875F)
-			//.passengerAttachments(0.35F)
 			.clientTrackingRange(8)
 			.build(EternalStarlight.id("ent").toString())
 	);
@@ -176,7 +174,6 @@ public class ESEntities {
 		"shadow_snail",
 		() -> EntityType.Builder.of(ShadowSnail::new, MobCategory.CREATURE)
 			.sized(0.5F, 0.4F)
-			//.passengerAttachments(0.2375F)  TODO should check how to replace that properly
 			.clientTrackingRange(8)
 			.build(EternalStarlight.id("shadow_snail").toString())
 	);
@@ -191,7 +188,6 @@ public class ESEntities {
 		"aurora_deer",
 		() -> EntityType.Builder.of(AuroraDeer::new, MobCategory.CREATURE)
 			.sized(0.9F, 1.75F)
-			//.passengerAttachments(1F)
 			.clientTrackingRange(8)
 			.build(EternalStarlight.id("aurora_deer").toString())
 	);
@@ -418,7 +414,6 @@ public class ESEntities {
 		"tangled_husk",
 		() -> EntityType.Builder.of(TangledHusk::new, MobCategory.MISC)
 			.sized(0.6F, 1.8F)
-			//.vehicleAttachment(Player.DEFAULT_VEHICLE_ATTACHMENT)
 			.clientTrackingRange(32)
 			.updateInterval(2)
 			.build(EternalStarlight.id("tangled_husk").toString())
@@ -452,7 +447,6 @@ public class ESEntities {
 		"tear_bomb_minecart",
 		() -> EntityType.Builder.<TearBombMinecart>of(TearBombMinecart::new, MobCategory.MISC)
 			.sized(0.98F, 0.7F)
-			//.passengerAttachments(0.1875F)
 			.clientTrackingRange(8)
 			.build(EternalStarlight.id("tear_bomb_minecart").toString())
 	);

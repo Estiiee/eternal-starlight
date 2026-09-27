@@ -969,7 +969,7 @@ public class ESItemModelProvider extends ItemModelProvider {
 		basicItem(ESItems.WARHAMMER_PENDANT.get());
 		basicItem(ESItems.BUTTERFLY_WINGS_AMULET.get());
 		basicItem(ESItems.FUNGUS_AMULET.get());
-		//basicItem(ESItems.PEARL_NECKLACE.get());
+		basicItem(ESItems.PEARL_NECKLACE.get());
 		basicItem(ESItems.CRESCENT_PENDANT.get());
 
 		block(ESItems.THE_GATEKEEPER_SPAWNER.get());

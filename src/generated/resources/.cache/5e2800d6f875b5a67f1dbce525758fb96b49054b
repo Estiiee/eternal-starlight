@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-21T17:52:54.0467087	Tags for minecraft:item mod id eternal_starlight
+// 1.20.1	2026-09-27T14:29:53.9565973	Tags for minecraft:item mod id eternal_starlight
 49d6be28d9b8da6ebe3d7246980fb4a6109f43df data/c/tags/items/campfires.json
 e4fdfbaf8d9054e500c7eec455bfa598ca079aaa data/c/tags/items/crops/crinoa.json
 0f45e4de3f46badd50b06221cecbacd1794901a9 data/c/tags/items/crops/nocturnal_millet.json
@@ -51,7 +51,7 @@ cb7bd7016f01a02a9962561c7acd940d498f0d57 data/c/tags/items/storage_blocks/raw_de
 a58395bf22281e72e2238e886f5d92ef0a345025 data/c/tags/items/storage_blocks/starcore.json
 008766211d0717f41a85575cf3f98f51042ece8c data/c/tags/items/storage_blocks/starlit_diamond.json
 02f69b29fe14e794f9001703f71ecc365c5fd9c2 data/c/tags/items/storage_blocks/unrealium.json
-1be851301cc10d5b081110b15df5d8927abc5df7 data/eternal_starlight/tags/items/accessories.json
+4d69eeaa14298a6219d29623c1c52c93996f0892 data/eternal_starlight/tags/items/accessories.json
 ba9125aa546790a0582445879c658b228dbb763c data/eternal_starlight/tags/items/accessory_applicable/axe.json
 caa885e89e3dc28bc90ef4a54ca6e6e730ac2902 data/eternal_starlight/tags/items/accessory_applicable/chest_armor.json
 e18f783b117a7e13e931b76dc1175b8cbca5eddb data/eternal_starlight/tags/items/accessory_applicable/hammer.json

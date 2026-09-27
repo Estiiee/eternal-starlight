@@ -18,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -61,14 +62,17 @@ public abstract class ItemStackMixin {
 		cancellable = true
 	)
 	private void injectAccessoryModifiers(EquipmentSlot slot, CallbackInfoReturnable<Multimap<Attribute, AttributeModifier>> cir) {
+		ItemStack stack = (ItemStack) (Object) this;
 
-		ItemStack stack = (ItemStack)(Object)this;
+		if (!(stack.getItem() instanceof ArmorItem armor)) return;
 
-		Multimap<Attribute, AttributeModifier> modifiers = cir.getReturnValue();
-		if (modifiers == null) return;
+		if (armor.getEquipmentSlot() != slot) return;
 
 		List<ItemStack> accessories = ESAccessoryUtil.getAccessoryStacks(stack);
 		if (accessories.isEmpty()) return;
+
+		Multimap<Attribute, AttributeModifier> modifiers = cir.getReturnValue();
+		if (modifiers == null) return;
 
 		Multimap<Attribute, AttributeModifier> newMap = HashMultimap.create(modifiers);
 
@@ -76,10 +80,7 @@ public abstract class ItemStackMixin {
 			Accessory accessory = ESAccessories.get(accStack);
 			if (accessory == null) continue;
 
-			Multimap<Attribute, AttributeModifier> accMods = accessory.attributeModifiers();
-			if (accMods.isEmpty()) continue;
-
-			newMap.putAll(accMods);
+			newMap.putAll(accessory.attributeModifiers());
 		}
 
 		cir.setReturnValue(newMap);

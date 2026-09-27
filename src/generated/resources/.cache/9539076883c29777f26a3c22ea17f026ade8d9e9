@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-21T18:40:06.7142375	Item Models: eternal_starlight
+// 1.20.1	2026-09-27T14:29:53.9495982	Item Models: eternal_starlight
 f36b77087c8c68017703cd72753faa9ec0bb05c9 assets/eternal_starlight/models/item/abyssal_fruit.json
 566abbb0b7c88c3e62953e9a59a3c7a789481e57 assets/eternal_starlight/models/item/abyssal_geyser.json
 22602a3404b600eeca3221ff2689c59995af1cfc assets/eternal_starlight/models/item/abyssal_magma_block.json
@@ -649,6 +649,7 @@ ab00c94148b0d38aba8a1e454147a19576c25ba7 assets/eternal_starlight/models/item/pa
 7cedd74c09b0bb94bfb75b6c7f18cc673964275a assets/eternal_starlight/models/item/packed_nightfall_mud_deepsilver_ore.json
 f7519cce549e3c1a56cd9b0a02f1f47b15cb18ac assets/eternal_starlight/models/item/packed_nightfall_mud_malarite_ore.json
 450d938b145d84e3e5806ea587464300471d008d assets/eternal_starlight/models/item/parasol_grass.json
+397a1f1612ed7e8d3d332cde130f57965f5e913d assets/eternal_starlight/models/item/pearl_necklace.json
 27fe02b17bc15cb185b6dab6bfbdcb0f4d8f8ff0 assets/eternal_starlight/models/item/permafrost_spawner.json
 b6e7d0e93afbad155ed7de58502ad8506541f28d assets/eternal_starlight/models/item/permafrost_spawn_egg.json
 c1315c30db7ce19e3869d72add9cb6d74435612c assets/eternal_starlight/models/item/petal_scythe.json

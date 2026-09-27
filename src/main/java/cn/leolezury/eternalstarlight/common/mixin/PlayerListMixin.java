@@ -57,8 +57,8 @@ public abstract class PlayerListMixin {
 	}
 
 	@WrapOperation(method = "respawn", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;overworld()Lnet/minecraft/server/level/ServerLevel;"))
-	private ServerLevel es$modifyRespawnDimension(MinecraftServer server, Operation<ServerLevel> original) {
-		if (ESConfig.respawnInEternalStarlight.get()) {
+	private ServerLevel es$modifyRespawnDimension(MinecraftServer server, Operation<ServerLevel> original, @Local(argsOnly = true) ServerPlayer player) {
+		if (ESConfig.respawnInEternalStarlight.get() && player.level().dimension() == ESDimensions.STARLIGHT_KEY) {
 			return server.getLevel(ESDimensions.STARLIGHT_KEY);
 		}
 		return original.call(server);

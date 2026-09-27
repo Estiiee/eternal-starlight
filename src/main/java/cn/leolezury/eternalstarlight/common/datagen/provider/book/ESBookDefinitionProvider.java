@@ -183,8 +183,8 @@ public class ESBookDefinitionProvider extends BookDefinitionProvider {
 						CompoundTag tag = new CompoundTag();
                         stack.save(tag);
                         return tag;
-					}), 2, 5 + 2))
-				/*
+					}), 2, 5 + 2)),
+
 				new ConfiguredBookComponent<>(BookComponentRegistry.DISPLAY, new DisplayBookComponent.Config(EternalStarlight.id("pearl_necklace_display"), new HashSet<>(Set.of(
 					Sets.newHashSet(EternalStarlight.id("advancement_enter_starlight"))
 				)), 30)
@@ -196,7 +196,6 @@ public class ESBookDefinitionProvider extends BookDefinitionProvider {
                         stack.save(tag);
                         return tag;
 					}), 2, 5 + 2))
-				 */
 			),
 			// starlight golem
 			List.of(

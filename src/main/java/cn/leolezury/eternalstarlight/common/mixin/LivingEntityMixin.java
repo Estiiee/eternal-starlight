@@ -27,6 +27,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +43,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -344,5 +346,15 @@ public abstract class LivingEntityMixin {
 				}
 			}
 		}
+	}
+
+	@ModifyVariable(method = "decreaseAirSupply", at = @At("STORE"), name = "i")
+	private int applyOxygenBonus(int i, int currentAir) {
+		LivingEntity self = (LivingEntity)(Object) this;
+		AttributeInstance oxygenBonus = self.getAttribute(ESAttributes.OXYGEN_BONUS.get());
+		if (oxygenBonus != null) {
+			i += (int) oxygenBonus.getValue();
+		}
+		return i;
 	}
 }

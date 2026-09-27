@@ -790,9 +790,9 @@ public class ESCommonHandler {
 						player.setAirSupply(maxAir);
 					}
 				}
-				//if (ESAccessoryUtil.getActiveAccessoriesOnArmors(player).contains(ESItems.PEARL_NECKLACE.get()) && !player.isEyeInFluid(FluidTags.WATER)) {
-				//	player.setAirSupply(player.getMaxAirSupply());
-				//}
+				if (ESAccessoryUtil.getActiveAccessoriesOnArmors(player).contains(ESItems.PEARL_NECKLACE.get()) && !player.isEyeInFluid(FluidTags.WATER)) {
+					player.setAirSupply(player.getMaxAirSupply());
+				}
 				Inventory inventory = player.getInventory();
 				for (int i = 0; i < inventory.getContainerSize(); i++) {
 					ItemStack stack = inventory.getItem(i);

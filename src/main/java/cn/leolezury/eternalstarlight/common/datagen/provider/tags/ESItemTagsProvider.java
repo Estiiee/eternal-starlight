@@ -525,7 +525,7 @@ public class ESItemTagsProvider extends ItemTagsProvider {
 				ESItems.WARHAMMER_PENDANT.get(),
 				ESItems.BUTTERFLY_WINGS_AMULET.get(),
 				ESItems.FUNGUS_AMULET.get(),
-				//ESItems.PEARL_NECKLACE.get(),
+				ESItems.PEARL_NECKLACE.get(),
 				ESItems.CRESCENT_PENDANT.get()
 			);
 		tag(ESTags.Items.AURORA_DEER_FOOD)

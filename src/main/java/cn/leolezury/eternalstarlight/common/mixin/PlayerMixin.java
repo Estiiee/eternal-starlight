@@ -3,9 +3,11 @@ package cn.leolezury.eternalstarlight.common.mixin;
 import cn.leolezury.eternalstarlight.common.entity.interfaces.Grappling;
 import cn.leolezury.eternalstarlight.common.entity.interfaces.SpellCaster;
 import cn.leolezury.eternalstarlight.common.handler.ESCommonHandler;
+import cn.leolezury.eternalstarlight.common.registry.ESAttributes;
 import cn.leolezury.eternalstarlight.common.registry.ESDataAttachments;
 import cn.leolezury.eternalstarlight.common.registry.ESItems;
 import cn.leolezury.eternalstarlight.common.util.ESTags;
+import cn.leolezury.eternalstarlight.common.util.GalacticQuiverUtil;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -13,6 +15,7 @@ import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,6 +25,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.objectweb.asm.Opcodes;
@@ -29,8 +33,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import javax.annotation.Nullable;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin implements SpellCaster {
@@ -181,5 +188,20 @@ public abstract class PlayerMixin implements SpellCaster {
 		if (((Player) (Object) this).getItemBySlot(EquipmentSlot.FEET).is(ESItems.UNREALIUM_BOOTS.get())) {
 			ci.cancel();
 		}
+	}
+
+	@Inject(method = "getDigSpeed", at = @At("RETURN"), cancellable = true, remap = false)
+	private void applySubmergedMiningSpeed(BlockState state, @Nullable BlockPos pos, CallbackInfoReturnable<Float> cir) {
+		Player self = (Player) (Object) this;
+
+		if (!self.isEyeInFluid(FluidTags.WATER)) return;
+
+		float f = cir.getReturnValue();
+
+		double bonus = self.getAttributeValue(ESAttributes.SUBMERGED_MINING_SPEED.get());
+
+		f *= (float) bonus;
+
+		cir.setReturnValue(f);
 	}
 }

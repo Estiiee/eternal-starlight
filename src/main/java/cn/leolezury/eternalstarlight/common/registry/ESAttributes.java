@@ -15,7 +15,9 @@ public class ESAttributes {
 	public static final RegistryObject<Attribute, RangedAttribute> METEOR_COUNTERATTACK_CHANCE = ATTRIBUTES.register("generic.meteor_counterattack_chance", () -> new RangedAttribute("attribute.name." + EternalStarlight.ID + ".generic.meteor_counterattack_chance", 0, 0, 1));
 	public static final RegistryObject<Attribute, RangedAttribute> HEAL_MULTIPLIER = ATTRIBUTES.register("generic.heal_multiplier", () -> new RangedAttribute("attribute.name." + EternalStarlight.ID + ".generic.heal_multiplier", 1, 0, 1024));
 	public static final RegistryObject<Attribute, Attribute> ENEMY_FOLLOW_RANGE_MULTIPLIER = ATTRIBUTES.register("generic.enemy_follow_range_multiplier", () -> new RangedAttribute("attribute.name." + EternalStarlight.ID + ".generic.enemy_follow_range_multiplier", 1, 0, 1024));
+	public static final RegistryObject<Attribute, Attribute> OXYGEN_BONUS = ATTRIBUTES.register("generic.oxygen_bonus", () -> new RangedAttribute("attribute.name." + EternalStarlight.ID + ".generic.oxygen_bonus", 0, 0, 1024).setSyncable(true));
 	public static final RegistryObject<Attribute, Attribute> FOG_VISION = ATTRIBUTES.register("player.fog_vision", () -> new RangedAttribute("attribute.name." + EternalStarlight.ID + ".player.fog_vision", 0, 0, 1024).setSyncable(true));
+	public static final RegistryObject<Attribute, Attribute> SUBMERGED_MINING_SPEED = ATTRIBUTES.register("player.submerged_mining_speed", () -> new RangedAttribute("attribute.name." + EternalStarlight.ID + ".player.submerged_mining_speed", 1.0D, 0, 1024).setSyncable(true));
 
 	public static void loadClass() {
 	}

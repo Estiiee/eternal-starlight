@@ -1370,9 +1370,6 @@ public class ESItems {
 			return item;
 		});
 
-	/* attributes don't exist in 1.20.1
-	//TODO do sth with this
-
 	public static final RegistryObject<Item, Item> PEARL_NECKLACE =
 		ITEMS.register("pearl_necklace", () -> {
 			Item item = new Item(new Item.Properties().stacksTo(1));
@@ -1380,7 +1377,7 @@ public class ESItems {
 			Multimap<Attribute, AttributeModifier> attrs =
 				ImmutableMultimap.<Attribute, AttributeModifier>builder()
 					.put(
-						Attributes.OXYGEN_BONUS,
+						ESAttributes.OXYGEN_BONUS.get(),
 						new AttributeModifier(
 							EternalStarlight.id("pearl_necklace_oxygen_bonus").toString(),
 							3,
@@ -1388,7 +1385,7 @@ public class ESItems {
 						)
 					)
 					.put(
-						Attributes.SUBMERGED_MINING_SPEED,
+						ESAttributes.SUBMERGED_MINING_SPEED.get(),
 						new AttributeModifier(
 							EternalStarlight.id("pearl_necklace_submerged_mining_speed").toString(),
 							4,
@@ -1412,7 +1409,6 @@ public class ESItems {
 
 			return item;
 		});
-	 */
 
 	public static final RegistryObject<Item, Item> CRESCENT_PENDANT =
 		ITEMS.register("crescent_pendant", () -> {
