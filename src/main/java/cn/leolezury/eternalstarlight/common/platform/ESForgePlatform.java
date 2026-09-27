@@ -263,6 +263,11 @@ public class ESForgePlatform implements ESPlatform {
 	}
 
 	@Override
+	public CreativeModeTab.Builder getTabBuilder() {
+		return CreativeModeTab.builder();
+	}
+
+	@Override
 	public <T> EntityDataAttachment<T> createAttachment(ResourceLocation id, Supplier<T> defaultValue, boolean copyOnDeath, BiPredicate<T, T> shouldSync, BiConsumer<FriendlyByteBuf, T> writer, Function<FriendlyByteBuf, T> reader) {
 		return new ForgeEntityDataAttachment<>(id, defaultValue, copyOnDeath, shouldSync, writer, reader);
 	}

@@ -1118,7 +1118,7 @@ public class ESCreativeModeTabs {
 	}
 
 	private static RegistryObject<CreativeModeTab, CreativeModeTab> registerTab(String id, List<Supplier<Item>> items, Function<Item, CreativeModeTab.DisplayItemsGenerator> itemsGenerator, Supplier<ItemStack> icon) {
-		return TABS.register(id, () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
+		return TABS.register(id, () -> ESPlatform.INSTANCE.getTabBuilder()
 			.icon(icon)
 			.title(Component.translatable("tab." + EternalStarlight.ID + "." + id))
 			.displayItems((displayParameters, output) -> {
