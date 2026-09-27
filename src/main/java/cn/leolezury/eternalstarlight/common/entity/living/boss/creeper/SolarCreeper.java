@@ -48,6 +48,7 @@ import java.util.Map;
 public class SolarCreeper extends ESBoss implements TrailOwner {
 	private static final String TAG_INTRO_COMPLETED = "intro_completed";
 
+	private static final EntityDataAccessor<Float> HEALTH_PERCENTAGE = SynchedEntityData.defineId(SolarCreeper.class, EntityDataSerializers.FLOAT);
 	private static final EntityDataAccessor<Vector3f> SOLAR_RAY_NORMAL = SynchedEntityData.defineId(SolarCreeper.class, EntityDataSerializers.VECTOR3);
 	private static final EntityDataAccessor<Float> SOLAR_RAY_ANGLE = SynchedEntityData.defineId(SolarCreeper.class, EntityDataSerializers.FLOAT);
 	private static final EntityDataAccessor<Float> SOLAR_RAY_LENGTH_0 = SynchedEntityData.defineId(SolarCreeper.class, EntityDataSerializers.FLOAT);
@@ -83,6 +84,14 @@ public class SolarCreeper extends ESBoss implements TrailOwner {
 
 	public void finishIntro() {
 		this.introCompleted = true;
+	}
+
+	public float getHealthPercentage() {
+		return this.getEntityData().get(HEALTH_PERCENTAGE);
+	}
+
+	public void setHealthPercentage(float healthPercentage) {
+		this.getEntityData().set(HEALTH_PERCENTAGE, healthPercentage);
 	}
 
 	public Vector3f getSolarRayNormal() {
@@ -198,6 +207,7 @@ public class SolarCreeper extends ESBoss implements TrailOwner {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
+		this.entityData.define(HEALTH_PERCENTAGE, 1f);
 		this.entityData.define(SOLAR_RAY_NORMAL, new Vector3f());
 		this.entityData.define(SOLAR_RAY_ANGLE, 0f);
 		this.entityData.define(SOLAR_RAY_LENGTH_0, 0f);
@@ -226,10 +236,10 @@ public class SolarCreeper extends ESBoss implements TrailOwner {
 		//new SolarCreeperStarPhase(),
 		//new SolarCreeperSolarWindPhase(),
 		//new SolarCreeperDashPhase(),
-		//new SolarCreeperSupernovaPhase(),
-		//new SolarCreeperSolarRayPhase(),
-		//new SolarCreeperBlackHolePhase(),
-		//new SolarCreeperGalaxyPhase(),
+		new SolarCreeperSupernovaPhase(),
+		new SolarCreeperSolarRayPhase(),
+		new SolarCreeperBlackHolePhase(),
+		new SolarCreeperGalaxyPhase(),
 		new SolarCreeperPowerUpPhase()
 	));
 
@@ -370,7 +380,8 @@ public class SolarCreeper extends ESBoss implements TrailOwner {
 	@Override
 	public void aiStep() {
 		if (!level().isClientSide) {
-			setNoGravity(!introCompleted || getBehaviorState() == SolarCreeperPowerUpPhase.ID);
+			int state = getBehaviorState();
+			setNoGravity(!introCompleted || state == SolarCreeperIntroPhase.ID || state == SolarCreeperPowerUpPhase.ID);
 		}
 		super.aiStep();
 		bossEvent.update();
@@ -395,6 +406,7 @@ public class SolarCreeper extends ESBoss implements TrailOwner {
 				clientPartOffsets.clear();
 				clientPartRotations.clear();
 			}
+			setHealthPercentage(getHealth() / getMaxHealth());
 			oldSolarRayNormal.set(renderSolarRayNormal);
 			renderSolarRayNormal.set(getSolarRayNormal());
 			oldSolarRayAngle = renderSolarRayAngle;

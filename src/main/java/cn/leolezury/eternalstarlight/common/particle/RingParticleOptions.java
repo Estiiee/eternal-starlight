@@ -24,16 +24,6 @@ public record RingParticleOptions(Vector3f fromColor, Vector3f toColor, float sc
 		);
 	}
 
-	public static RingParticleOptions getFlare(float lifeScale) {
-		return fromIntColor(
-			new Vector3f(222, 112, 255),
-			new Vector3f(255, 255, 116),
-			2,
-			lifeScale,
-			true
-		);
-	}
-
 	public static final MapCodec<RingParticleOptions> CODEC =
 		RecordCodecBuilder.mapCodec(instance -> instance.group(
 			ExtraCodecs.VECTOR3F.fieldOf("from_color").forGetter(RingParticleOptions::fromColor),
