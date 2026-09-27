@@ -1,4 +1,4 @@
-// 1.20.1	2026-09-26T21:34:20.5791623	Loot Tables
+// 1.20.1	2026-09-27T11:14:35.4738071	Loot Tables
 2b18f4ee4964de853f965809175e41672c73f2a3 data/eternal_starlight/loot_tables/blocks/abyssal_fire.json
 188b8614ef4815c81bb45c3a918877795892cf25 data/eternal_starlight/loot_tables/blocks/abyssal_geyser.json
 77967e1af1e01fc2bbf8f97dd52c510df8648a4c data/eternal_starlight/loot_tables/blocks/abyssal_kelp.json
@@ -787,9 +787,9 @@ f3335a8e5f90e6e941a62f24477cc70d4c8354d6 data/eternal_starlight/loot_tables/bloc
 87e7b64c9f20566b5d602b6d4bb781ed3e318b27 data/eternal_starlight/loot_tables/bosses/starlight_golem.json
 7d8134a3945e99b727cbfcb5618794ef34d3f196 data/eternal_starlight/loot_tables/bosses/the_gatekeeper.json
 890afa5631ca14e49ce7f315fbbcfcf6aab0cf5b data/eternal_starlight/loot_tables/chests/accessories.json
-799c0b7b4e3af6ab17e7d8eb59648b1b3e1eabf7 data/eternal_starlight/loot_tables/chests/cursed_garden.json
+b439fbcfda891dfb5d25cc007a3c109daf4b9fc6 data/eternal_starlight/loot_tables/chests/cursed_garden.json
 8c725a71afebb4f514de296ac3b419c72cc11fab data/eternal_starlight/loot_tables/chests/dusk_lockbox.json
-a5464ac7cb6b7636aa1f0d43870e1a20af9e71f4 data/eternal_starlight/loot_tables/chests/golem_forge.json
+dc7a1a5bf8fc0b1b8aa76d7e422d0d99756f09c7 data/eternal_starlight/loot_tables/chests/golem_forge.json
 eda01bdee35afbdc813a93b58b95e056c950a01c data/eternal_starlight/loot_tables/chests/music_discs.json
 2b0ff4a9dc225b07542b2202fd4f6910489083a7 data/eternal_starlight/loot_tables/entities/aethersent_golem.json
 a461217c956af4bd0fb8803afa168aeb4b966da2 data/eternal_starlight/loot_tables/entities/astral_golem.json
