@@ -2,6 +2,8 @@ package cn.leolezury.eternalstarlight.common.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import java.util.List;
+
 public class ESConfig {
 	public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 	public static final ForgeConfigSpec SPEC;
@@ -17,6 +19,9 @@ public class ESConfig {
 	public static ForgeConfigSpec.BooleanValue startWithGuidebook;
 	public static ForgeConfigSpec.BooleanValue aethersentMeteorReplaceBlocks;
 	public static ForgeConfigSpec.BooleanValue blockUnknownAttachmentWarning;
+	public static ForgeConfigSpec.BooleanValue renderSunriseColor;
+
+	public static ForgeConfigSpec.ConfigValue<List<? extends String>> customSkyColorBiomes;
 
 	public static ForgeConfigSpec.DoubleValue aethersentMeteorDropRate;
 
@@ -229,6 +234,16 @@ public class ESConfig {
 		aethersentMeteorReplaceBlocks = BUILDER.define("aethersentMeteorReplaceBlocks", false);
 		mobMaxTearyTicks = BUILDER.defineInRange("mobMaxTearyTicks", 200, 0, 100000);
 		blockUnknownAttachmentWarning = BUILDER.define("blockUnknownAttachmentWarning", true);
+		renderSunriseColor = BUILDER.comment("Whether the orange sunrise color should be visible when looking at the Dead Star").define("renderSunriseColor", true);
+
+		customSkyColorBiomes = BUILDER
+			.comment("Biomes that will read the sky color from the biome settings instead of using a fixed value")
+			.defineListAllowEmpty(
+				List.of("customSkyColorBiomes"),
+				List.of(),
+				o -> o instanceof String
+			);
+
 		BUILDER.pop();
 
 		// ===== ITEMS =====

@@ -2,6 +2,7 @@ package cn.leolezury.eternalstarlight.common.client.renderer.world;
 
 import cn.leolezury.eternalstarlight.common.EternalStarlight;
 import cn.leolezury.eternalstarlight.common.client.weather.ClientWeatherState;
+import cn.leolezury.eternalstarlight.common.config.ESConfig;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -12,9 +13,13 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
@@ -26,6 +31,11 @@ public class ESSkyRenderer {
 	private static final float TIME = 12500f;
 	private static final float FIXED_TIME = (float) (Mth.frac(TIME / 24000.0 - 0.25) * 2.0 + 0.5 - Math.cos(Mth.frac(TIME / 24000.0 - 0.25) * Math.PI) / 2.0) / 3.0F;
 	private static VertexBuffer starBuffer;
+
+	private static final double SKY_TRANSITION_SECONDS = 10.0;
+
+	private static Vec3 currentSkyColor;
+	private static long lastSkyUpdate;
 
 	public static boolean renderSky(ClientLevel level, PoseStack poseStack, Matrix4f matrix, float partialTicks, Camera camera, Runnable setupFog) {
 		Minecraft minecraft = Minecraft.getInstance();
@@ -39,7 +49,47 @@ public class ESSkyRenderer {
 		FogType fogType = camera.getFluidInCamera();
 		if (fogType != FogType.POWDER_SNOW && fogType != FogType.LAVA && !levelRenderer.doesMobEffectBlockSky(camera)) {
 
-			Vec3 vec3 = level.getSkyColor(minecraft.gameRenderer.getMainCamera().getPosition(), partialTicks);
+			BlockPos pos = camera.getBlockPosition();
+			Holder<Biome> biomeHolder = level.getBiome(pos);
+			Biome biome = biomeHolder.value();
+
+			ResourceLocation biomeId = level.registryAccess().registryOrThrow(Registries.BIOME).getKey(biome);
+
+			boolean useCustomSkyColor = biomeId != null && ESConfig.customSkyColorBiomes.get().contains(biomeId.toString());
+
+			Vec3 targetSkyColor = null;
+
+			if (useCustomSkyColor) {
+				int rgb = biome.getModifiedSpecialEffects().getSkyColor();
+
+				targetSkyColor = new Vec3(
+					((rgb >> 16) & 0xFF) / 255.0,
+					((rgb >> 8) & 0xFF) / 255.0,
+					(rgb & 0xFF) / 255.0
+				);
+			}
+
+			Vec3 vanillaSkyColor = level.getSkyColor(camera.getPosition(), partialTicks);
+
+			Vec3 desiredSkyColor =
+				targetSkyColor != null
+					? targetSkyColor
+					: vanillaSkyColor;
+
+			long now = System.nanoTime();
+
+			if (currentSkyColor == null) {
+				currentSkyColor = vanillaSkyColor;
+				lastSkyUpdate = now;
+			} else {
+				double elapsed = (now - lastSkyUpdate) / 1_000_000_000.0;
+				double factor = Math.min(1.0, elapsed / SKY_TRANSITION_SECONDS);
+
+				currentSkyColor = currentSkyColor.lerp(desiredSkyColor, factor);
+				lastSkyUpdate = now;
+			}
+
+			Vec3 vec3 = currentSkyColor;
 			float g = (float) vec3.x;
 			float h = (float) vec3.y;
 			float i = (float) vec3.z;
