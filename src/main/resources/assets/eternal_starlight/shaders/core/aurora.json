@@ -103,6 +103,8 @@
       "values": [
         0.0
       ]
-    }
+    },
+    { "name": "AuroraColorA", "type": "float", "count": 3, "values": [0.0, 0.5, 1.0] },
+    { "name": "AuroraColorB", "type": "float", "count": 3, "values": [0.0, 1.0, 0.5] }
   ]
 }

@@ -93,6 +93,9 @@ uniform float FogEnd;
 uniform vec4 FogColor;
 uniform float GameTime;
 
+uniform vec3 AuroraColorA;
+uniform vec3 AuroraColorB;
+
 in vec4 vertexColor;
 in vec2 texCoord0;
 
@@ -107,6 +110,9 @@ void main() {
     float colorNoise = gln_simplex(vec3(colorNoisePos.x, colorNoisePos.y, noiseZ));
     float shapeNoise = rayMarch(shapeNoisePos, shapeNoisePos, noiseZ);
     colorNoise = ((colorNoise + 1.0) / 2.0) * 0.5;
-    vec4 color = vec4(0.0, 0.5 + colorNoise, 1.0 - colorNoise, shapeNoise);
+
+    vec3 base = mix(AuroraColorA, AuroraColorB, colorNoise * 2.0);
+    vec4 color = vec4(base, shapeNoise);
+
     fragColor = linear_fog(vec4(vertexColor.rgb * ColorModulator.rgb * color.rgb, vertexColor.a * ColorModulator.a * color.a * smoothstep(10.0, 4.0, length(shapeNoisePos)) * linear_fog_fade(length(texCoord0 / 4.5), FogStart, FogEnd)), length(texCoord0 / 4.5), FogStart, FogEnd, FogColor);
 }

@@ -410,8 +410,17 @@ public class ESClientHandler {
 		}
 		// aurora
 		float aurora = Mth.lerp(partialTicks, oldAuroraIntensity, auroraIntensity);
-		if (aurora > 0 && Minecraft.getInstance().level != null) {
-			renderSkyShader(ESShaders.getAurora(), aurora);
+		Minecraft mc = Minecraft.getInstance();
+		if (aurora > 0 && mc.level != null) {
+			ShaderInstance shader = ESShaders.getAurora();
+			if (shader != null) {
+				ESShaders.AuroraColors.update(mc.level, mc.gameRenderer.getMainCamera().getBlockPosition());
+				Vec3 a = ESShaders.AuroraColors.currentA;
+				Vec3 b = ESShaders.AuroraColors.currentB;
+				shader.safeGetUniform("AuroraColorA").set((float) a.x, (float) a.y, (float) a.z);
+				shader.safeGetUniform("AuroraColorB").set((float) b.x, (float) b.y, (float) b.z);
+				renderSkyShader(shader, aurora);
+			}
 		}
 	}
 

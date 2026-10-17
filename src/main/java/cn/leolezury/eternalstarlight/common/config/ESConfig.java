@@ -1,5 +1,6 @@
 package cn.leolezury.eternalstarlight.common.config;
 
+import cn.leolezury.eternalstarlight.common.client.shader.ESShaders;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public class ESConfig {
 	public static ForgeConfigSpec.BooleanValue renderSunriseColor;
 
 	public static ForgeConfigSpec.ConfigValue<List<? extends String>> customSkyColorBiomes;
+	public static ForgeConfigSpec.ConfigValue<List<? extends String>> auroraBiomeColors;
+	public static ForgeConfigSpec.ConfigValue<String> sunriseColor;
 
 	public static ForgeConfigSpec.DoubleValue aethersentMeteorDropRate;
 
@@ -235,6 +238,7 @@ public class ESConfig {
 		mobMaxTearyTicks = BUILDER.defineInRange("mobMaxTearyTicks", 200, 0, 100000);
 		blockUnknownAttachmentWarning = BUILDER.define("blockUnknownAttachmentWarning", true);
 		renderSunriseColor = BUILDER.comment("Whether the orange sunrise color should be visible when looking at the Dead Star").define("renderSunriseColor", true);
+		sunriseColor = BUILDER.comment("RGBA value (e.g. '#FF8800FF') for the sunrise color if it's enabled. -1 for vanilla").define("sunriseColor", "-1");
 
 		customSkyColorBiomes = BUILDER
 			.comment("Biomes that will read the sky color from the biome settings instead of using a fixed value")
@@ -243,6 +247,12 @@ public class ESConfig {
 				List.of(),
 				o -> o instanceof String
 			);
+
+		auroraBiomeColors = BUILDER
+			.comment("Aurora colors per biome, format 'biome_id=#RRGGBB,#RRGGBB' (start color, end color). Biomes not listed use the default blue-green.")
+			.defineListAllowEmpty("auroraBiomeColors",
+				List.of(),
+				o -> o instanceof String s && ESShaders.AuroraColors.parseEntry(s) != null);
 
 		BUILDER.pop();
 

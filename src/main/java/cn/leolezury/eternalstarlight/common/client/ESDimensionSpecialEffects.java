@@ -45,7 +45,25 @@ public class ESDimensionSpecialEffects extends DimensionSpecialEffects {
 
 	@Override
 	public float[] getSunriseColor(float timeOfDay, float partialTick) {
-		return ESConfig.renderSunriseColor.get() ? super.getSunriseColor(timeOfDay, partialTick) : null;
+		if (!ESConfig.renderSunriseColor.get()) return null;
+		float[] sunriseColor = parseSunrise(ESConfig.sunriseColor.get());
+		return sunriseColor != null ? sunriseColor : super.getSunriseColor(timeOfDay, partialTick);
+	}
+
+	public float[] parseSunrise(String s) {
+		if (s.equals("-1")) return null;
+		try {
+			String h = s.startsWith("#") ? s.substring(1) : s;
+			int c = (int) Long.parseLong(h, 16);
+			return new float[] {
+				(c >>> 24 & 0xFF) / 255F,
+				(c >>> 16 & 0xFF) / 255F,
+				(c >>> 8  & 0xFF) / 255F,
+				(c        & 0xFF) / 255F
+			};
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 
 	public static boolean doRenderSky(ClientLevel level, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
