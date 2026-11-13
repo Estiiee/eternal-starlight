@@ -72,37 +72,4 @@ public class ESPaintingItem extends HangingEntityItem {
 
 		return InteractionResult.CONSUME;
 	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-		super.appendHoverText(stack, level, tooltip, flag);
-
-		CompoundTag tag = stack.getTagElement("EntityTag");
-
-		if (tag != null && tag.contains("variant", Tag.TAG_STRING)) {
-			String id = tag.getString("variant");
-			ResourceLocation rl = new ResourceLocation(id);
-
-			tooltip.add(Component.translatable(rl.toLanguageKey("painting", "title"))
-				.withStyle(ChatFormatting.YELLOW));
-			tooltip.add(Component.translatable(rl.toLanguageKey("painting", "author"))
-				.withStyle(ChatFormatting.GRAY));
-
-			PaintingVariant variant = level != null
-				? level.registryAccess().registryOrThrow(Registries.PAINTING_VARIANT)
-				.get(rl)
-				: null;
-
-			if (variant != null) {
-				tooltip.add(Component.translatable(
-					"painting.dimensions",
-					variant.getWidth(),
-					variant.getHeight()
-				));
-			}
-		} else if (flag.isCreative()) {
-			tooltip.add(TOOLTIP_RANDOM_VARIANT);
-		}
-	}
 }
-

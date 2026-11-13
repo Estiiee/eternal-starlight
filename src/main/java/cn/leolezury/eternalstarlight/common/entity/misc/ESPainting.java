@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -50,6 +51,45 @@ public class ESPainting extends Painting {
 
 	public static Optional<ESPainting> createPainting(Level level, ItemStack item, BlockPos blockPos, Direction direction) {
 		ESPainting painting = new ESPainting(level, blockPos);
+
+		CompoundTag entityTag = item.getTagElement("EntityTag");
+
+		if (entityTag != null
+			&& entityTag.contains("variant", CompoundTag.TAG_STRING)) {
+
+			ResourceLocation variantId = ResourceLocation.tryParse(
+				entityTag.getString("variant")
+			);
+
+			if (variantId == null) {
+				return Optional.empty();
+			}
+
+			var registry = level.registryAccess()
+				.registryOrThrow(Registries.PAINTING_VARIANT);
+
+			var variant = registry.getHolder(
+				net.minecraft.resources.ResourceKey.create(
+					Registries.PAINTING_VARIANT,
+					variantId
+				)
+			);
+
+			if (variant.isEmpty()) {
+				return Optional.empty();
+			}
+
+			painting.setVariant(variant.get());
+			painting.setDirection(direction);
+
+			if (!painting.survives()) {
+				return Optional.empty();
+			}
+
+			painting.setItem(item);
+			return Optional.of(painting);
+		}
+
 		List<Holder<PaintingVariant>> list = new ArrayList<>();
 		Iterable<Holder<PaintingVariant>> placeable = level.registryAccess().registryOrThrow(Registries.PAINTING_VARIANT).getTagOrEmpty(ESTags.PaintingVariants.PLACEABLE);
 		placeable.forEach(list::add);
