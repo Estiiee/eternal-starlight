@@ -80,6 +80,9 @@ public class EternalStarlight {
 		ESFlammabilityRegistry.registerDefaults();
 		ESEnchantments.loadClass();
 		ESForgeNetworkHandler.register();
+
+		ESPaintingVariants.REGISTRY.register(modBus);
+		
 		synchronized (LootContextParamSets.REGISTRY) {
 			LootContextParamSets.REGISTRY.put(EternalStarlight.id("boss"), ESLootContextParamSets.BOSS);
 		}
@@ -93,7 +96,6 @@ public class EternalStarlight {
 		//ESForgePlatform.ATTACHMENT_TYPE_REGISTER.register(modBus);
 		//ESRegistryRemapper.addAliases();
 
-		ESPaintingVariants.REGISTRY.register(modBus);
 	}
 
 	public static ResourceLocation id(String string) {
