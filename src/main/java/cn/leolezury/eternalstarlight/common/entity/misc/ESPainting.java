@@ -52,11 +52,12 @@ public class ESPainting extends Painting {
 	public static Optional<ESPainting> createPainting(Level level, ItemStack item, BlockPos blockPos, Direction direction) {
 		ESPainting painting = new ESPainting(level, blockPos);
 
+		// Get CT from the painting to look for specific data.
 		CompoundTag entityTag = item.getTagElement("EntityTag");
 
-		if (entityTag != null
-			&& entityTag.contains("variant", CompoundTag.TAG_STRING)) {
+		if (entityTag != null && entityTag.contains("variant", CompoundTag.TAG_STRING)) {
 
+			// Retrieve the variantId if present.
 			ResourceLocation variantId = ResourceLocation.tryParse(
 				entityTag.getString("variant")
 			);
@@ -78,6 +79,8 @@ public class ESPainting extends Painting {
 			if (variant.isEmpty()) {
 				return Optional.empty();
 			}
+
+			// If valid variant, place it.
 
 			painting.setVariant(variant.get());
 			painting.setDirection(direction);
