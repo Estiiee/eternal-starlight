@@ -1350,5 +1350,29 @@ public class ESItemTagsProvider extends ItemTagsProvider {
 			.add(
 				ESItems.SALTPETER_MATCHBOX.get()
 			);
+
+		// Minecraft Tags for Music Discs
+		tag(ItemTags.MUSIC_DISCS)
+			.add(
+				ESItems.MUSIC_DISC_WHISPER_OF_THE_STARS.get(),
+				ESItems.MUSIC_DISC_DUSK_O_EREYESTERDAY.get(),
+				ESItems.MUSIC_DISC_TRANQUILITY.get(),
+				ESItems.MUSIC_DISC_NEST.get(),
+				ESItems.MUSIC_DISC_POSTERITY.get(),
+				ESItems.MUSIC_DISC_THE_THORNY_REIGN.get(),
+				ESItems.MUSIC_DISC_PROFUNDITY.get(),
+				ESItems.MUSIC_DISC_WAILING_WELL.get(),
+				ESItems.MUSIC_DISC_STARS_SHINING_UPON_THE_SEA.get(),
+				ESItems.MUSIC_DISC_OPTIMIZED_OPTION.get(),
+				ESItems.MUSIC_DISC_MECHANICAL_FOSSIL.get(),
+				ESItems.MUSIC_DISC_FAKE_LIGHT.get(),
+				ESItems.MUSIC_DISC_TRANQUILITY_II.get(),
+				ESItems.MUSIC_DISC_ATLANTIS.get(),
+				ESItems.MUSIC_DISC_SACRED_DESERT.get(),
+				ESItems.MUSIC_DISC_SPIRIT.get(),
+				ESItems.MUSIC_DISC_ETHER_RAIN.get(),
+				ESItems.MUSIC_DISC_BRISK.get(),
+				ESItems.MUSIC_DISC_MOONLIGHT.get()
+			);
 	}
 }

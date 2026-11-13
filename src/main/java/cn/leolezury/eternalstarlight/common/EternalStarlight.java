@@ -1,5 +1,6 @@
 package cn.leolezury.eternalstarlight.common;
 
+import cn.leolezury.eternalstarlight.common.registry.ESPaintingVariants;
 import cn.leolezury.eternalstarlight.common.block.flammable.ESFlammabilityRegistry;
 import cn.leolezury.eternalstarlight.common.client.helper.ClientHelper;
 import cn.leolezury.eternalstarlight.common.client.helper.ClientSideHelper;
@@ -79,6 +80,9 @@ public class EternalStarlight {
 		ESFlammabilityRegistry.registerDefaults();
 		ESEnchantments.loadClass();
 		ESForgeNetworkHandler.register();
+
+		ESPaintingVariants.REGISTRY.register(modBus);
+		
 		synchronized (LootContextParamSets.REGISTRY) {
 			LootContextParamSets.REGISTRY.put(EternalStarlight.id("boss"), ESLootContextParamSets.BOSS);
 		}
@@ -91,6 +95,7 @@ public class EternalStarlight {
 		}
 		//ESForgePlatform.ATTACHMENT_TYPE_REGISTER.register(modBus);
 		//ESRegistryRemapper.addAliases();
+
 	}
 
 	public static ResourceLocation id(String string) {
