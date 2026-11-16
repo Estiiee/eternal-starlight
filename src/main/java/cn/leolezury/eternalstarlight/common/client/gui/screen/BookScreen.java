@@ -291,6 +291,8 @@ public class BookScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+		renderBackground(guiGraphics);
+
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 		int startHeight = 0;
 		for (ConfiguredBookComponent<?, ?> component : new ArrayList<>(currentComponents)) {
